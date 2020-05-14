@@ -1,0 +1,125 @@
+{% extends 'project/base.html' %}
+{% load crispy_forms_tags %}
+{% load extras %}
+{% block content %}
+
+
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{object.logo}}" alt=""/>
+        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{object.name}} 
+                                    </h5>
+                                    <h6>
+                                        
+                                    </h6>
+                                   
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#team" role="tab" aria-controls="home" aria-selected="true">Team</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#projects" role="tab" aria-controls="profile" aria-selected="false">Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="profile" aria-selected="false">Videos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+							<a class="btn btn-primary btn-block" href="{% url 'project:awards_create' org_id=object.pk %}" role="button">New Awards Project</a>
+							<a class="btn btn-primary btn-block" href="{% url 'project:message_create' org_id=object.pk %}" role="button">New Corporate Message</a>
+							<a class="btn btn-primary btn-block" href="" role="button">New Promotion Project</a>
+							<a class="btn btn-primary btn-block" href="#" role="button">New Feature Project</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="home-tab">
+                            	<div class="table-responsive">
+									<table class="table table-bordered">		
+										<thead>
+											<tr>
+												<th>Username</th>
+												<th>First Name</th>
+												<th>Last Name</th>
+												<th>Role</th>					
+												<th>Email</th>
+											</tr>									
+									{% for t in object.team %}
+											<tr>
+												<td>{{t.user.username}}</a></td>
+												<td>{{t.user.first_name}}</td>
+												<td>{{t.user.last_name}}</td>
+												<td>{{t.role}}</td>
+												<td>{{t.user.email}}</td>
+											</tr>
+									{% endfor %}
+										</thead>
+									</table>
+								</div>
+                                      
+                            </div>
+                            <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="profile-tab">
+ 								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Project</th>
+												<th>Type</th>
+												<th>Date</th>
+												<th>Number of Videos</th>
+											</tr>
+											{% for p in object.projects %}
+											<tr>								
+												<td><a href="{% url 'project:get_project' project_id=p.id project_type=p.type %}">{{p|name}}</a></td>
+												<td>{{p.type}}</td>
+												<td>{{p.date}}</td>
+												<td>{{p.project_videos}}</td>
+											</tr>
+											{% endfor %}
+										</thead>
+									</table>
+								</div>
+								</div>     
+								<div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="profile-tab">
+									<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Video</th>
+												<th>Project</th>
+												<th>Date</th>					
+											</tr>
+											{% for v in object.videos %}
+											<tr>
+												<td><a href="{% url 'project:award_detail' org_id=v.awards.organization.id awards_id=v.awards.id pk=v.pk %}">{{v|name}}</a></td>
+												<td>{{v.awards}}</td>
+												<td>{{v.date}}</td>				
+											</tr>
+									{% endfor %}
+										</thead>
+									</table>
+								</div>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+</div>
+
+{% endblock %}

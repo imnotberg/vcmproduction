@@ -1,0 +1,10 @@
+{% extends 'project/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+{{partner}}
+{% for v in video_list %}
+
+{{v}}
+
+{% endfor %}
+{% endblock %}

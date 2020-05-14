@@ -1,0 +1,71 @@
+{% extends 'project/base.html' %}
+{% block content %}
+{% load extras %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+<div class="container emp-profile">
+            
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                          
+                            <img src="{{org.logo}}" alt=""/>
+        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        Create New Award for {{org}} {{project.name}}
+                                    </h5>
+                                    <h6>
+                                        <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+                                    </h6>
+                                   
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+   
+                    </div>
+                    <div class="col-md-8">
+                        <form action="" method="post">
+                          {% csrf_token %}
+                           {{ wizard.management_form }}
+                           {% if wizard.form.forms %}
+                              {{ wizard.form.management_form }}
+                              {% for form in wizard.form.forms %}
+                                {{ form|crispy }}
+                              {% endfor %}
+                            {% else %}
+                              {{ wizard.form|crispy }}
+                            {% endif %}
+                            <br>
+
+                             {% if wizard.steps.prev %}                              
+                              <button class="btn btn-lg mr-1" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "Back" %}</button>
+                              {% endif %}
+                              
+                              {% if wizard.steps.prev and wizard.steps.next %}
+                              <input class="btn btn-lg mr-1" type="submit" value="{% trans "Next" %}"/>                              
+                              {% endif %}
+                              {% if wizard.steps.next and not wizard.steps.prev %}
+                              <input class="btn btn-lg mr-1" type="submit" value="{% trans "Next" %}"/>  
+                              {% endif %}
+                              {% if not wizard.steps.next %}
+                              <input class="btn btn-lg mr-1" type="submit" value="{% trans "Submit" %}"/>
+                              {% endif %}
+
+                            </form>
+                        </div>
+                         
+                      
+                    </div>
+                </div>
+                       
+
+{% endblock %}

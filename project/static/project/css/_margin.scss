@@ -1,0 +1,11 @@
+@for $i from 1 through 100 {.mt-#{$i} {margin-top: #{$i}px; }}
+@for $i from 1 through 100 {.mb-#{$i} {margin-bottom: #{$i}px; }}
+@for $i from 1 through 100 {.mtb-#{$i} {margin-top: #{$i}px; margin-bottom: #{$i}px; }}
+
+@for $i from 1 through 9 {@include smsc{.mt-#{$i} {margin-top: #{$i}px; }}}
+@for $i from 1 through 9 {@include smsc{.mb-#{$i} {margin-bottom: #{$i}px; }}}
+@for $i from 1 through 9 {@include smsc{.mtb-#{$i} {margin-top: #{$i}px; margin-bottom: #{$i}px; }}}
+
+@for $i from 10 through 100 {@include smsc{.mt-#{$i} {margin-top: 10px; }}}
+@for $i from 10 through 100 {@include smsc{.mb-#{$i} {margin-bottom: 10px; }}}
+@for $i from 10 through 100 {@include smsc{.mtb-#{$i} {margin-top: 10px; margin-bottom: 10px; }}}

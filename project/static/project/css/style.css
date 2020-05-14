@@ -1,0 +1,183 @@
+/**********Default Property*************/
+/****************************************/
+
+/*# sourceMappingURL=main.css.map */
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600|Oswald:400,500,600|Poppins:300,400,500,600,700);
+
+
+.wrapper {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+.top_bar {
+    width: 100%;
+    float: left;
+    height: 64px;
+    background-color: #17243d;
+    line-height: 64px;
+    color: #fff;
+}
+
+.top_bar ul li
+{
+	display:inline-block;
+	}
+.top_bar ul li a {
+    padding: 21px;
+    font-size: 18px;
+    color: #fff;
+    font-family: poppins;
+	border-left:1px solid  #202B4D;
+}
+.content_part {
+    width: 100%;
+    float: left;
+    background: #fff;
+    height: 1000px;
+}
+.side_bar {
+    width: 100%;
+    float: left;
+    
+    border-top: none;
+    /* padding: 0px 0 0 20px; */
+}
+.Sidebar_box
+{
+	width:100%;
+	float:left;
+}
+.box_header {
+    height: 48px;
+    background-color: #7289da;
+    width: 100%;
+    float: left;
+    padding: 10px;
+    font-size: 14px;
+    font-family: Poppins;
+    font-weight: 440;
+    border-radius: 5px 5px 0px 0px;
+    margin-bottom: 25px;
+}
+.Sidebar_box {
+    border: 2px solid #0d1629;
+    height: 350px;
+    color: #fff;
+    margin-top: 50px;
+    border-radius: 8px 8px 0px 0px;
+}
+.box_header h5 {
+    font-size: 18px;
+    color: #fff;
+    font-family: Oswald;
+    padding: 4px 0px 0px 11px;
+    margin: 0;
+    font-weight: normal;
+}
+
+.box_body {
+    padding: 20px;
+    color: #000;
+}
+.box_border {
+    border-top: 1px solid #0d1629;
+    padding: 13px 0px;
+}
+.Edit_button a {
+    text-decoration: none;
+    color: #fff;
+    background: #7289da;
+    padding: 11px 30px 11px 30px;
+    border-radius: 5px;
+	font-family:poppins;
+}
+.Edit_button {
+    width: 100%;
+    float: left;
+    position: relative;
+    top: 38px;
+    text-align: center;
+}
+.Edit_button a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #c7503c;
+    padding: 11px 30px 11px 30px;
+    border-radius: 5px;
+	font-family:poppins;
+	transition-duration: 0.5s;
+}
+.side_border
+{
+	border-left:1px solid #0d1629
+	}
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #0d1629;
+    background-color: #17243d;
+    width: 30%;
+    height: 300px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+    color: #fff;
+    border-bottom: 1px solid #0d1629;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #c7503c;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #c7503c;
+}
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 3px solid #0d1629;
+    width: 70%;
+    border-left: none;
+    min-height: 345px;
+    color: #000;
+}
+.tab_menu {
+    margin-top: 50px;
+}
+div#Details h3 {
+    font-family: poppins;
+    margin: 8px 0px;
+}
+@media only screen and (max-width: 768px) {
+ .top_bar ul li a {
+    padding: 15px;
+    font-size: 18px;
+    color: #fff;
+    font-family: poppins;
+    border-left: 1px solid #202B4D;
+}
+.Sidebar_box {
+    border: 2px solid #0d1629;
+    height: 350px;
+    color: #fff;
+    margin-top: 50px;
+    border-radius: 8px 8px 0px 0px;
+    margin-bottom: 30px;
+}
+}

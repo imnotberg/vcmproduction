@@ -1,0 +1,1 @@
+web: gunicorn customer_portal.wsgi --preload --workers 1

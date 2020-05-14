@@ -1,0 +1,34 @@
+{% extends 'project/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="d-flex p-2 justify-content-center">
+<div class="card">
+	<div class="card-header">Create Awards Project for {{partner}}</div>
+	<div class="card-body">
+		<form method="post">{% csrf_token %}
+			<div class="table-responsive">
+	    	<table class="table table-bordered">
+	    		<tr>
+	    			<th>{{ form.project_name.label_tag }}</th>
+	    			<td>{{ form.project_name }}</td>
+	    			<tr>
+	    			<th>{{ form.date.label_tag }}</th>
+	    			<td>{{ form.date}}</td>
+	    		</tr>
+	    		</tr>
+	    		<tr>
+	    			<th>{{form.number_of_awards.label_tag}}</td>
+	    			<td>{{form.number_of_awards}}</td>
+	    		</tr>
+	    	</table>
+	    	</div>
+	    	<div class="d-flex p-2 justify-content-center"> 
+    <input class="btn btn-lg btn-primary" type="submit" value="Update">
+</div>
+		</form>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+

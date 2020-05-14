@@ -1,0 +1,340 @@
+
+{% extends 'project/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load extras %}
+{% block content %}
+<style>
+    .col-md-6 {
+        height: calc(1.5em + 1rem + 2px);
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        border-radius: .3rem;
+    }
+
+    input {
+        overflow: visible;
+        width: 520px;
+        height: 50px;
+    }
+
+    .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        height: 50px;
+    }
+
+    textarea {
+        overflow: auto;
+        resize: vertical;
+        width: 100%;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        width: 200px;
+        margin-left: 450px;
+    }
+
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif;
+        color: black
+    }
+
+    .bootstrap-iso form button, .bootstrap-iso form button:hover {
+        color: white !important;
+    }
+
+    .asteriskField {
+        color: red;
+    }
+</style>
+
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{org.logo}}" alt=""/>
+        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        New Corporate Message for {{org.name}} 
+                                    </h5>
+                                    <h6>
+                                        
+                                    </h6>
+                                   
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#form" role="tab" aria-controls="home" aria-selected="true">Form</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8">
+                        <br>
+                        <br>
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="home-tab">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h5>{{ form.name.label_tag }}</h5>
+                                                    {{ form.name }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5>{{ form.date.label_tag }}</h5>
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                        </div>
+
+                                                        {{ form.date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5>{{ form.representatives.label_tag }}</h5>
+                                                    {{ form.representatives }}
+                                                </div>
+                                                <div class="col">
+                                                    <h5>{{ form.theme.label_tag }}</h5>
+                                                    {{ form.theme }}
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5>{{ form.message.label_tag }}</h5>
+                                                    {{ form.message }}
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary center-block">Submit</button>
+                                        </form>
+
+                        </div>
+      
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    });
+    $(document).ready(function () {
+        $("#id_name").attr('placeholder', '{{ form.name.help_text}}');
+        $("#id_date").attr('placeholder', '{{ form.date.help_text }}');
+        $("#id_representatives").attr('placeholder', '{{form.representatives.help_text}}');
+        $("#id_theme").attr('placeholder', '{{form.theme.help_text}}');
+        $("#id_message").attr('placeholder', '{{form.message.help_text}}');
+    });
+</script>
+
+{% endblock %}
+
+<html lang="en">
+<style>
+    .col-md-6 {
+        height: calc(1.5em + 1rem + 2px);
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        border-radius: .3rem;
+    }
+
+    input {
+        overflow: visible;
+        width: 520px;
+        height: 50px;
+    }
+
+    .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        height: 50px;
+    }
+
+    textarea {
+        overflow: auto;
+        resize: vertical;
+        width: 100%;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        width: 200px;
+        margin-left: 450px;
+    }
+
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif;
+        color: black
+    }
+
+    .bootstrap-iso form button, .bootstrap-iso form button:hover {
+        color: white !important;
+    }
+
+    .asteriskField {
+        color: red;
+    }
+</style>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'project/css/style.css' %}">
+    <!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+    <script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
+
+    <!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
+
+    <!--Font Awesome (added because you use icons in your prepend/append)-->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
+
+    <!-- Inline CSS based on choices in "Settings" tab -->
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top_bar">
+                <div class="container">
+                    <nav>
+                        <ul>
+                            <li><a href="http://www.virtuouscirclemedia.com">Home</a></li>
+                            <li class="nav-item">
+                                {% if request.user.is_authenticated %}
+                                    <a href="">Projects</a>
+                                {% else %}
+                                    <a href="">Projects</a>
+                                    </li>
+                                {% endif %}
+                            <li><a href="">Logout</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Create Message Project for {{ partner }}</h1>
+        </div>
+    </div>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <h5>{{ form.name.label_tag }}</h5>
+                {{ form.name }}
+            </div>
+            <div class="col-md-6">
+                <h5>{{ form.date.label_tag }}</h5>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                    </div>
+
+                    {{ form.date }}
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col">
+                <h5>{{ form.representatives.label_tag }}</h5>
+                {{ form.representatives }}
+            </div>
+            <div class="col">
+                <h5>{{ form.theme.label_tag }}</h5>
+                {{ form.theme }}
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col">
+                <h5>{{ form.message.label_tag }}</h5>
+                {{ form.message }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary center-block">Submit</button>
+    </form>
+</div>
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    });
+    $(document).ready(function () {
+        $("#id_name").attr('placeholder', '{{ form.name.help_text}}');
+        $("#id_date").attr('placeholder', '{{ form.date.help_text }}');
+        $("#id_representatives").attr('placeholder', '{{form.representatives.help_text}}');
+        $("#id_theme").attr('placeholder', '{{form.theme.help_text}}');
+        $("#id_message").attr('placeholder', '{{form.message.help_text}}');
+    });
+</script>
+
+</body>
+
+</html>

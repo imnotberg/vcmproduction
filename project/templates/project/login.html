@@ -1,0 +1,103 @@
+{% extends "project/base.html" %}
+{% load crispy_forms_tags %}
+{% load extras %}
+{% block content %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+    <style>
+    .login-form {
+		width: 385px;
+		margin: 30px auto;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    input, .login-btn {
+        min-height: 38px;
+        border-radius: 2px;
+        width: 260px;
+    }
+    .input-group-addon .fa {
+        font-size: 18px;
+    }
+    .login-btn {
+        font-size: 15px;
+        font-weight: bold;
+        width: 300px;
+    }
+	.social-btn .btn {
+		border: none;
+        margin: 10px 3px 0;
+        opacity: 1;
+	}
+    .social-btn .btn:hover {
+        opacity: 0.9;
+    }
+	.social-btn .btn-primary {
+        background: #507cc0;
+    }
+	.social-btn .btn-info {
+		background: #64ccf1;
+	}
+	.social-btn .btn-danger {
+		background: #df4930;
+	}
+    .or-seperator {
+        margin-top: 20px;
+        text-align: center;
+        border-top: 1px solid #ccc;
+    }
+    .or-seperator i {
+        padding: 0 10px;
+        background: #f7f7f7;
+        position: relative;
+        top: -11px;
+        z-index: 1;
+    }
+    </style>
+    <div class="login-form">
+    <form action="{% url 'project:login' %}" method="post">
+        {% csrf_token %}
+        <h2 class="text-center">Sign in</h2>
+        <div class="form-group">
+        	<div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                {{ form.username}}
+            </div>
+        </div>
+		<div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                {{ form.password }}
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary login-btn btn-block">Sign in</button>
+        </div>
+    </form>
+    <p class="text-center text-muted small">Don't have an account? <a href="{% url 'project:register' %}">Sign up here!</a></p>
+</div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" >
+    $(document).ready(function(){
+        $("#id_username").attr('placeholder', '{{form.username.label}}');
+        $("#id_password").attr('placeholder', '{{form.password.label}}');
+    });
+</script>
+{% endblock %}

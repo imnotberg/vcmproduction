@@ -1,0 +1,422 @@
+{% extends 'project/base.html' %}
+{% load crispy_forms_tags %}
+{% load extras %}
+{% load static %}
+{% block content %}
+<div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{object.organization.logo}}" alt=""/>        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{object.name}}
+                                    </h5>
+                                    <h6>
+                                        {{object.date}}
+                                    </h6>
+                                    <h6>
+                                        
+                                    </h6>
+                                   
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true">Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#script" role="tab" aria-controls="profile" aria-selected="false">Script</a>
+                                  </li>
+                                  <li>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#assets" role="tab" aria-controls="profile" aria-selected="false">Assets</a>
+                                  </li>
+                                  <li>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#draft" role="tab" aria-controls="profile" aria-selected="false">Draft</a>
+                                  </li>
+                                  <li>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#final" role="tab" aria-controls="profile" aria-selected="false">Final</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Project"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <a class="btn btn-primary btn-block" href="" role="button">Add Award</a>  
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="home-tab">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Video</th>
+                                            <th>Title</th>
+                                            <th>Script</th>
+                                            <th>Assets</th>
+                                            <th>Draft</th>
+                                            <th>Final</th>
+                                        </tr>
+                                        {% for v in project|video_list %}
+                                        
+                                        <tr>
+                                            <td><a href="">{{v.award_number}}</a></td>
+                                            <td><a href="">{{v.award_name}}</a></td>
+                                            <td><a href="">Link</a></td>
+                                            <td><a href="">Link</a></td>
+                                            <td><a href="">Link</a></td>
+                                            <td><a href="">Link</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </thead>
+                                </table>                                      
+                            </div>
+                            <div class="tab-pane fade show" id="team" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">        
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Role</th>                   
+                                                <th>Email</th>
+                                            </tr>                                   
+                                    {% for t in object.organization.team %}
+                                            <tr>
+                                                <td>{{t.user.username}}</a></td>
+                                                <td>{{t.user.first_name}}</td>
+                                                <td>{{t.user.last_name}}</td>
+                                                <td>{{t.role}}</td>
+                                                <td>{{t.user.email}}</td>
+                                            </tr>
+                                    {% endfor %}
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+{% endblock %}
+    <style>
+        nav:hover {
+            background: #17243d;
+        }
+    .tabcontent{
+        "float: left;
+                                    padding: 0px 12px;
+                                    border: 3px solid #0d1629;
+                                    width: 70%;
+                                    border-left: none;
+                                    min-height: 350px;
+                                    color: #000;
+                                     max-height: 150px;
+                                    overflow-y: scroll;"
+    }
+    </style>
+    <!DOCTYPE html>
+    <div class="wrapper">
+    <div class="content_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="Sidebar_box">
+                        <div class="box_header">
+                            <h5>Video Details</h5>
+                        </div>
+                        <div class="box_body">
+                            <div class="row box_border">
+                                <div class="col-md-5 col-sm-5 col-xs-5">
+                                    <p><strong>Title</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-5">
+                                    <p>{{ object.name }}</p>
+                                </div>
+                            </div>
+                            <div class="row box_border">
+                                <div class="col-md-5 col-sm-5 col-xs-5">
+                                    <p><strong>Date</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-5">
+                                    <p>{{ object.date }}</p>
+                                </div>
+                            </div>
+                            <div class="row box_border">
+                                <div class="col-md-5 col-sm-5 col-xs-5">
+                                    <p><strong>Status</strong></p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-5">
+                                    <p>{{ object.status }}</p>
+                                </div>
+                            </div>
+                            <div class="Edit_button">
+                                <a href="#">Edit Video</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-8 side_border">
+                    <div class="tab_menu">
+                        <div class="tab">
+                            <button class="tablinks" onclick="openCity(event, 'Details')" id="defaultOpen">Details
+                            </button>
+                            <button class="tablinks" onclick="openCity(event, 'Scripts')">Script</button>
+                            <button class="tablinks" onclick="openCity(event, 'Assets')">Assets</button>
+                            <button class="tablinks" onclick="openCity(event, 'Draft')">Draft</button>
+                            <button class="tablinks" onclick="openCity(event, 'Final')">Final</button>
+                        </div>
+
+                        <div id="Details" class="tabcontent">
+                            <h3>Message Theme </h3>
+                            <p>{{ object.notes.theme }}
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <h3>Message Representatives
+                            </h3>
+                            <p>{{ object.notes.reps }}
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type
+                                and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                but also the
+                                leap into electronic typesetting, remaining essentially unchanged. It was popularised in
+                                the 1960s
+                                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                            <h3>Message</h3>
+                            <p>{{ object.notes.message }}</p>
+                        </div>
+                        <div id="Scripts" class="tabcontent">
+                            <h3>Scripts </h3>
+
+                            <p>Things that have happened before won't necessarilly happen againLorem Ipsum is simply
+                                dummy text of
+                                the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy
+                                text ever
+                                since the 1500s,when an unknown printer took a galley of type and scrambled it to make a
+                                typ
+                                specimen book. It has survived not only five centuries, but also the leap into
+                                electronic
+                                typesetting, remaining essentially unchanged.
+                            </p>
+                        </div>
+                        <div id="Assets" class="tabcontent">
+                            <h3>Assets </h3>
+
+                            <p>Things that have happened before won't necessarilly happen againLorem Ipsum is simply
+                                dummy text
+                                of the printing and typesetting industry.Lorem Ipsum has been the industry's standard
+                                dummy text
+                                ever since the 1500s,when an unknown printer took a galley of type and scrambled it to
+                                make a
+                                typ specimen book. It has survived not only five centuries, but also the leap into
+                                electronic
+                                typesetting, remaining essentially unchanged.
+                            </p>
+                        </div>
+                        <div id="Draft" class="tabcontent">
+                            <h3>Assets </h3>
+
+                            <p>Things that have happened before won't necessarilly happen againLorem Ipsum is simply
+                                dummy
+                                text of the printing and typesetting industry.Lorem Ipsum has been the industry's
+                                standard
+                                dummy text ever since the 1500s,when an unknown printer took a galley of type and
+                                scrambled
+                                it to make a typ specimen book. It has survived not only five centuries, but also the
+                                leap
+                                into electronic typesetting, remaining essentially unchanged.
+                            </p>
+                        </div>
+                        <div id="Final" class="tabcontent">
+                            <h3>Final </h3>
+
+                            <p>Things that have happened before won't necessarilly happen againLorem Ipsum is simply
+                                dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's
+                                standard dummy text ever since the 1500s,when an unknown printer took a galley of type
+                                and scrambled it to make a typ specimen book. It has survived not only five centuries,
+                                but also the leap into electronic typesetting, remaining essentially unchanged.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                        </div>
+
+                    </div>
+                    <!-----sample---->
+
+                    <!-----sample end --->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+
+
