@@ -63,19 +63,7 @@ def vidify(value):
 		return slug
 	except:
 		return '#'
-@register.filter
-def convertify(file):
-	try:
-		with open("Video_01.docx", "rb") as docx_file:
-			result = mammoth.convert_to_html(docx_file)
-			html = result.value
-	except:
-		html = None
 
-	return html
-@register.filter
-def mapify(value):
-	return Map.objects.get(pk=2).map_data
 
 
 
