@@ -1,4 +1,3 @@
-from gdstorage.storage import GoogleDriveStorage, GoogleDrivePermissionType, GoogleDrivePermissionRole, GoogleDriveFilePermission
 import hashlib, random, sys
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -6,16 +5,6 @@ from django.contrib.postgres.fields import JSONField
 from django.urls import reverse
 from django.db import models
 from . import constants
-
-
-permission =  GoogleDriveFilePermission(
-   GoogleDrivePermissionRole.READER,
-   GoogleDrivePermissionType.USER,
-   "foo@mailinator.com"
-)
-
-gd_storage = GoogleDriveStorage(permissions=(permission, ))
-
 
 
 # Create your models here.
@@ -242,8 +231,3 @@ class Comment(models.Model):
     comment = models.CharField(max_length=2000)
     process_comment = models.CharField(max_length=200,choices=PROCESS_STEPS,null=True)
     info = JSONField()
-
-class Map(models.Model):
-    id = models.AutoField( primary_key=True)
-    map_name = models.CharField(max_length=200)
-    map_data = models.FileField(upload_to='maps', storage=gd_storage)
