@@ -1,6 +1,6 @@
 from django import template
 from project.models import Video,Client,Awards,Award
-import re,mammoth
+import re
 
 register = template.Library()
 
