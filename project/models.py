@@ -262,3 +262,28 @@ class Comment(models.Model):
     comment = models.CharField(max_length=2000)
     process_comment = models.CharField(max_length=200,choices=PROCESS_STEPS,null=True)
     info = JSONField()
+'''
+class File(models.Model):
+    award = models.ForeignKey(Award,on_delete=models.CASCADE)
+    file_name = models.CharField(max_length=2000,null=True,blank=True)
+    on_drive = models.BooleanField(null=False)
+
+@receiver(post_save, sender=File)
+def upload_file(sender, instance, **kwargs):
+    if instance.on_drive is False:
+        gd = GoogleDriveApi()
+        #folder_id = gd.createFolder(instance.file_name, instance.award.folder_id)
+        instance.folder_id = folder_id
+        instance.save()
+
+
+def uploadFile(self, name, file_path, mimetype, folder_name=None):
+        file_metadata = {'name': name}
+        if folder_name:
+            folder_id = self.createFolder(folder_name)
+            file_metadata = {'name': name, 'parents': [folder_id]}
+        media = MediaFileUpload(file_path, mimetype=mimetype)
+        file = self.service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+        return file.get('id')
+'''
+

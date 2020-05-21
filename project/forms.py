@@ -102,11 +102,13 @@ class AwardForm3(forms.Form):
 
 class AwardForm4(forms.Form):
     award_comments = forms.CharField(max_length=20000, label='Jury Comments', widget=forms.Textarea,required=False)
+    
 
 
 class AwardForm5(forms.Form):
     award_assets = forms.URLField(required=False, label='Assets',
                                   help_text='Folder URL for videos,pictures and graphics')
+    #award_files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
 
 class MessageCreateForm(forms.Form):
@@ -136,6 +138,9 @@ class CommentForm(forms.Form):
     block = forms.IntegerField(required=False,widget=forms.NumberInput)
     comment = forms.CharField(widget=forms.Textarea)
     comment_type = forms.ChoiceField(choices=CHOICES)
+class TestForm(forms.Form):
+    file=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
 
     
 

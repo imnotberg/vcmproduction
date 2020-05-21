@@ -18,6 +18,7 @@ from .forms import *
 from .models import *
 from . import constants
 import json
+import mimetypes
 import logging
 
 
@@ -343,6 +344,18 @@ class AwardUpdateView(UpdateView):
         context['award'] = Award.objects.get(pk=self.kwargs['pk'])
         return context
 
+def test(request):
+    if request.method == 'POST':
+        form = TestForm(request.POST or None,request.FILES or None)
+        print(form)
+        print(type(request.FILES.getlist('file')[0]))
+        
+
+    else:
+        form = TestForm
+
+
+    return render(request,'project/test.html',{'form':form})
 
 
 

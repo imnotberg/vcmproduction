@@ -31,6 +31,7 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/add/',views.AwardFormView.as_view(),name='award_create'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
+	path('test',views.test,name='test'),
 	#path('partner/<partner_id>/project/<project_id>',views.ProjectOverview.as_view(),name='project_overview'),
 	#path('partner/<partner_id>/project/add/',views.ProjectCreateView.as_view(),name='project_create'),
 	]

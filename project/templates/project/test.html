@@ -1,0 +1,12 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% load extras %}
+
+{% block body %}
+<form method="post" action="" enctype="multipart/form-data">
+	{% csrf_token %}
+{{form|crispy}}
+<input type="submit" name="submit">
+</form>
+{% endblock %}
