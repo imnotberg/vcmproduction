@@ -2,14 +2,32 @@
 {% load crispy_forms_tags %}
 {% block content %}
 {% load extras %}
-<div class="container emp-profile">
-	   
+<div class="container emp-profile">	  
             <form method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
                             <img src="{{object.awards.organization.logo}}" alt=""/>
-        
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal">
+                          Make Comment
+                        </button>
+
+                        <a class="btn btn-primary btn-block" href="{% url 'project:award_create' org_id=object.awards.organization.id awards_id=object.awards.id %}" role="button">Add Award</a>
+                        <a class="btn btn-primary btn-block" href="{% url 'project:awards_detail' org_id=object.awards.organization.id pk=object.awards.pk %}" role="button">View {{object.awards.project_name}}</a>
+                        <br>  
+                        <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Other Project Videos
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {% for v in object.awards.awards_list %}
+    <a class="dropdown-item" href="{%  url 'project:award_detail' org_id=v.awards.organization.pk awards_id=v.awards.id pk=v.pk %}">{{v.award_number}} {{v.award_name}}</a>
+    {% endfor %}
+
+  </div>
+</div>   
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -57,43 +75,42 @@
                     </div>
                     <div class="col-md-2">  	
                     	<a class="btn btn-primary btn-block" href="{% url 'project:award_edit' org_id=object.awards.organization.pk awards_id=object.awards.pk pk=object.pk %}" role="button">Edit</a>
-                        
-                    </form>
-
-                   		 
+                        <!-- Button to Open the Modal -->          
+                    </form>                   		 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
- 						<div class="table-responsive">
- 							<h3>Other Project Videos</h3>
- 							<table class="table-bordered" style="width: 100%">
- 								<thead>
- 									<tr>
- 										<th>Number</th>
- 										<th>Name</th>
- 									</tr>
- 								</thead>
- 								<tbody>
- 									{% for v in object.awards.awards_list %}
- 									{% if v.pk != object.pk %}
- 									<tr>
- 										
- 										<td><a href="{% url 'project:award_detail' org_id=v.awards.organization.pk awards_id=v.awards.id pk=v.pk %}">{{v.award_number}}</a></td>
- 										<td><a href="{% url 'project:award_detail' org_id=v.awards.organization.pk awards_id=v.awards.id pk=v.pk %}">{{v.award_name}}</a></td>
- 										
- 									</tr>
- 									{% endif %}
- 									{% endfor %}
- 								</tbody>
- 							</table>
- 						</div>
- 						<br>
- 						
- 						<a class="btn btn-primary btn-block" href="{% url 'project:award_create' org_id=object.awards.organization.id awards_id=object.awards.id %}" role="button">Add Award</a>
-                        <a class="btn btn-primary btn-block" href="{% url 'project:awards_detail' org_id=object.awards.organization.id pk=object.awards.pk %}" role="button">View {{object.awards.project_name}}</a>
- 					
+
+ 						<br> 
+                       	
                     </div>
+                    <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Comments</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          {{form.block}}
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="home-tab">    
@@ -134,6 +151,7 @@
                             Final Pending
                             {% endif %}
                             </div>
+
     
 
                             </div>

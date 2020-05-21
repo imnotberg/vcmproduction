@@ -206,6 +206,15 @@ class PromotionDetailView(DetailView):
 class OrganizationDetailView(DetailView):
     model = Organization
 
+    def get_object(self,queryset=None):
+        print('we are back here')
+        obj = super(OrganizationDetailView, self).get_object()
+        print(obj,obj.pk)       
+        if Client.objects.get(user=self.request.user).organization != obj and self.request.user.id != 1:
+            obj = Client.objects.get(user=self.request.user).organization     
+            return obj
+        return obj
+
 
 
 @login_required
@@ -303,8 +312,10 @@ class AwardsDetailView(DetailView):
     model = Awards
     template_name = 'project/awards_detail.html'
 
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)       
+        context = super().get_context_data(**kwargs)  
+
 
         return context
 @method_decorator(login_required, name='dispatch')
@@ -313,7 +324,8 @@ class AwardDetailView(DetailView):
     template_name = 'project/award_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)       
+        context = super().get_context_data(**kwargs) 
+        context['form']=CommentForm      
 
         return context
 @method_decorator(login_required, name='dispatch')

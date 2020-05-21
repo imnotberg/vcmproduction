@@ -129,9 +129,13 @@ class MessageCreateForm(forms.Form):
                               help_text='Let us know what you want to communicate, and we will work on a draft script',
                               widget=forms.Textarea)
 class CommentForm(forms.Form):
+    CHOICES = (
+        ('a','A'),
+        ('b','B'),
+        )
     block = forms.IntegerField(required=False,widget=forms.NumberInput)
     comment = forms.CharField(widget=forms.Textarea)
-    comment_type = forms.ChoiceField()
+    comment_type = forms.ChoiceField(choices=CHOICES)
 
     
 

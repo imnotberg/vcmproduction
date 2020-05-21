@@ -183,6 +183,13 @@ class Awards(models.Model):
     date = models.DateField()
     number_of_awards = models.PositiveSmallIntegerField()
 
+    def get_object(self,queryset=None):
+        obj = super(PostDetailView, self).get_object()
+        if not obj.owner == self.request.user:
+            print('you shall not pass')
+        return obj
+
+
     def __str__(self):
         return f"{self.organization.name} {self.project_name} {self.date.year}"
 
@@ -211,6 +218,7 @@ class Award(models.Model):
     script = models.URLField(null=True, blank=True, default='#')
     draft = models.URLField(null=True, blank=True, default='#')
     final_draft = models.URLField(null=True, blank=True, default='#')
+    edit_comments = JSONField(null=True,blank=True)
 
     def __str__(self):
         return f"{self.awards.organization.name} {self.awards.project_name} {str(self.award_number)} {self.award_name}"

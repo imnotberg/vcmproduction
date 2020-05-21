@@ -2,7 +2,9 @@ __pycache__/
 db.sqlite3
 *.pyc
 local_settings.py
+google_creds.json
 project.json
 project/google_creds.json
 Video_01.docx
+credentials.json
 
