@@ -2,12 +2,16 @@ import hashlib, random, sys
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.fields import JSONField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.db import models
 from . import constants
 
 
 # Create your models here.
+from .googleDriveApi import GoogleDriveApi
+
 
 class Organization(models.Model):
     name = models.CharField(max_length=200)
@@ -19,8 +23,8 @@ class Organization(models.Model):
     @property
     def team(self):
         team_members = Client.objects.filter(organization=self)
-        return team_members    
-    @property 
+        return team_members
+    @property
     def videos(self):
         videos = Award.objects.filter(awards__organization=self)
         return videos
@@ -31,7 +35,7 @@ class Organization(models.Model):
     @property
     def promotion(self):
         return Promotion.objects.filter(organization=self)
-    @property   
+    @property
     def message(self):
         return Message.objects.filter(organization=self)
     @property
@@ -61,7 +65,7 @@ class Client(models.Model):
     @property
     def promotion(self):
         return Promotion.objects.filter(client=self)
-    @property   
+    @property
     def message(self):
         return Message.objects.filter(client=self)
 
@@ -69,7 +73,7 @@ class Client(models.Model):
     def projects(self):
         return [x for x in self.awards] + [y for y in self.promotion] + [z for z in self.message]
     @property
-    def list_of_videos(self):        
+    def list_of_videos(self):
 
         return [x for x in Video.objects.filter(project__client=self)] + [y for y in self.message] + [z for z in self.promotion]
 
@@ -171,7 +175,7 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message {self.organization.name}"
-    @property 
+    @property
     def type(self):
         return 'message'
 
@@ -181,6 +185,7 @@ class Awards(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=200)
     date = models.DateField()
+    folder_id = models.CharField(max_length=100, null=True, blank=True)
     number_of_awards = models.PositiveSmallIntegerField()
 
     def get_object(self,queryset=None):
@@ -195,7 +200,7 @@ class Awards(models.Model):
 
     def get_absolute_url(self):
         return reverse('project:awards_detail', kwargs={'org_id': self.organization.id, 'pk': self.pk})
-    @property 
+    @property
     def awards_list(self):
         return Award.objects.filter(awards=self).order_by('award_number','award_name')
     @property
@@ -203,8 +208,16 @@ class Awards(models.Model):
         return self.number_of_awards
 
     @property
-    def type(self):        
+    def type(self):
         return 'awards'
+
+
+@receiver(post_save, sender=Awards)
+def update_awards(sender, instance, **kwargs):
+    if instance.folder_id is None:
+        gd = GoogleDriveApi()
+        instance.folder_id = gd.createFolder(instance.project_name)
+        instance.save()
 
 class Award(models.Model):
     awards = models.ForeignKey(Awards, on_delete=models.CASCADE)
@@ -219,6 +232,7 @@ class Award(models.Model):
     draft = models.URLField(null=True, blank=True, default='#')
     final_draft = models.URLField(null=True, blank=True, default='#')
     edit_comments = JSONField(null=True,blank=True)
+    folder_id = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.awards.organization.name} {self.awards.project_name} {str(self.award_number)} {self.award_name}"
@@ -226,6 +240,15 @@ class Award(models.Model):
     def get_absolute_url(self):
         return reverse('project:award_detail',
                        kwargs={'pk': self.pk, 'org_id': self.awards.organization.id, 'awards_id': self.awards.id})
+
+
+@receiver(post_save, sender=Award)
+def update_award(sender, instance, **kwargs):
+    if instance.folder_id is None:
+        gd = GoogleDriveApi()
+        folder_id = gd.createFolder(instance.award_name, instance.awards.folder_id)
+        instance.folder_id = folder_id
+        instance.save()
 
 
 class Comment(models.Model):
