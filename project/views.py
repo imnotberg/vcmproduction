@@ -344,18 +344,26 @@ class AwardUpdateView(UpdateView):
         context['award'] = Award.objects.get(pk=self.kwargs['pk'])
         return context
 
-def test(request):
-    if request.method == 'POST':
-        form = TestForm(request.POST or None,request.FILES or None)
-        print(form)
-        print(type(request.FILES.getlist('file')[0]))
-        
-
-    else:
-        form = TestForm
+@method_decorator(login_required, name='dispatch')
+class FileCreateView(CreateView):
+    model = File
+    form_class = FileForm
 
 
-    return render(request,'project/test.html',{'form':form})
+    def get_initial(self, *args, **kwargs):
+        initial = super().get_initial(*args, **kwargs)
+        print('initial in this mf!')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        data = self.get_initial()
+        instance = form
+        print(instance)
+        return super().form_valid(form)
 
 
 

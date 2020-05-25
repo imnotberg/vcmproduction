@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django import forms
-from project.models import Client, Project, Video,Awards
+from project.models import Client, Project, Video,Awards,File
 
 
 class ProjectForm(ModelForm):
@@ -138,8 +138,15 @@ class CommentForm(forms.Form):
     block = forms.IntegerField(required=False,widget=forms.NumberInput)
     comment = forms.CharField(widget=forms.Textarea)
     comment_type = forms.ChoiceField(choices=CHOICES)
-class TestForm(forms.Form):
-    file=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+class FileForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ['file']
+        widgets = {'file':forms.ClearableFileInput(attrs={'multiple':True})}
+
+
+
 
 
     

@@ -262,12 +262,14 @@ class Comment(models.Model):
     comment = models.CharField(max_length=2000)
     process_comment = models.CharField(max_length=200,choices=PROCESS_STEPS,null=True)
     info = JSONField()
-'''
+    
 class File(models.Model):
-    award = models.ForeignKey(Award,on_delete=models.CASCADE)
+    award = models.ForeignKey(Award,on_delete=models.CASCADE,blank=True,null=True)
     file_name = models.CharField(max_length=2000,null=True,blank=True)
-    on_drive = models.BooleanField(null=False)
-
+    on_drive = models.BooleanField(default=False,null=True,blank=True)
+    file = models.FileField(upload_to='project/%Y/%m/%d',blank=True,null=True)
+    
+'''
 @receiver(post_save, sender=File)
 def upload_file(sender, instance, **kwargs):
     if instance.on_drive is False:

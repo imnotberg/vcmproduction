@@ -1,4 +1,4 @@
-#!C:\Users\adil\Desktop\New folder (2)\customer_portal-master\venv\Scripts\python.exe
+#!c:\users\aaron\documents\vcm\vcmproduction\venv\scripts\python.exe
 
 import argparse
 import code

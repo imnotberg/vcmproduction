@@ -37,7 +37,7 @@ class GoogleDriveApi:
         return file.get('id')
 
     def uploadFile(self, name, file_path, mimetype, folder_name=None):
-        file_metadata = {'name': name}
+        file_metadata = {'name': name,'parents':['10xHmmgSqgoWF5nG8_OZjs5qDBW7YpLs9']}
         if folder_name:
             folder_id = self.createFolder(folder_name)
             file_metadata = {'name': name, 'parents': [folder_id]}
