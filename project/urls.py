@@ -32,5 +32,5 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
 
-	path('file_create',FileCreateView.as_view(),name='file_create'),
+	path('upload/',views.model_form_upload,name='upload_form'),
 	]

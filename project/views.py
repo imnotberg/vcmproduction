@@ -208,9 +208,8 @@ class OrganizationDetailView(DetailView):
     model = Organization
 
     def get_object(self,queryset=None):
-        print('we are back here')
         obj = super(OrganizationDetailView, self).get_object()
-        print(obj,obj.pk)       
+       
         if Client.objects.get(user=self.request.user).organization != obj and self.request.user.id != 1:
             obj = Client.objects.get(user=self.request.user).organization     
             return obj
@@ -344,26 +343,18 @@ class AwardUpdateView(UpdateView):
         context['award'] = Award.objects.get(pk=self.kwargs['pk'])
         return context
 
-@method_decorator(login_required, name='dispatch')
-class FileCreateView(CreateView):
-    model = File
-    form_class = FileForm
-
-
-    def get_initial(self, *args, **kwargs):
-        initial = super().get_initial(*args, **kwargs)
-        print('initial in this mf!')
-        return initial
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-    def form_valid(self, form):
-        data = self.get_initial()
-        instance = form
-        print(instance)
-        return super().form_valid(form)
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('a',form.instance.file.path)
+            form.save(commit=False)
+            return redirect('project:index')
+    else:
+        form = FileForm()
+    return render(request, 'project/model_form_upload.html', {
+        'form': form
+    })
 
 
 
