@@ -343,18 +343,16 @@ class AwardUpdateView(UpdateView):
         context['award'] = Award.objects.get(pk=self.kwargs['pk'])
         return context
 
-def model_form_upload(request):
-    if request.method == 'POST':
-        form = FileForm(request.POST, request.FILES)
-        if form.is_valid():
-            print('a',form.instance.file.path)
-            form.save(commit=False)
-            return redirect('project:index')
-    else:
-        form = FileForm()
-    return render(request, 'project/model_form_upload.html', {
-        'form': form
-    })
-
+class FileUpload(CreateView):
+    model = File
+    form_class = FileForm
+    def form_valid(self,form):
+        obj = form.save(commit=False)
+        print('obje',obj)
+        if self.request.FILES:
+            for f in self.request.FILES.getlist('file'):
+                obj = self.model.objects.create(file=f)
+                print('obj',obj)
+        return super(FileUpload,self).form_valid(form)
 
 

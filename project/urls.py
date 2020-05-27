@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
@@ -32,5 +34,8 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
 
-	path('upload/',views.model_form_upload,name='upload_form'),
-	]
+	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload/',views.FileUpload.as_view(),name='upload_form'),
+	] 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
