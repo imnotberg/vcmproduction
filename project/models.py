@@ -280,9 +280,12 @@ class File(models.Model):
 
 @receiver(post_save, sender=File)
 def upload_file(sender, instance, **kwargs):
+    print(instance.__dict__,'IDDDD')
+    print(type(instance),'ffffff')
     import mimetypes
     gd = GoogleDriveApi()
-    gd.uploadFile(instance.filename, instance.file.url, mimetypes.guess_type(instance.filename)[0])
+    gd.uploadFile(instance.filename, instance.file.url, instance.award.folder_id,mimetypes.guess_type(instance.filename)[0])
+    #uploadFile(self, name, file_path, mimetype, folder_name=None):
 
 
     

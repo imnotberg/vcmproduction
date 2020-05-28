@@ -47,9 +47,8 @@ def driveify(value):
 		return "#"
 @register.filter
 def folderfy(value):
-	try:
-		slug = re.findall('id=(.+)',value)[0]
-		url = f"https://drive.google.com/embeddedfolderview?id={slug}#list"
+	try:		
+		url = f"https://drive.google.com/embeddedfolderview?id={value}#list"
 		return url
 	except:
 		return "#"

@@ -143,6 +143,7 @@ class FileForm(ModelForm):
     class Meta:
         model = File
         fields = ['file']
+        help_text = {'file':'Select One, Multiple files or One Folder to the project'}
         widgets = {'file':forms.ClearableFileInput(attrs={'multiple':True})}
 
 

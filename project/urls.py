@@ -34,8 +34,10 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
 
-	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload/',views.FileUpload.as_view(),name='upload_form'),
+	#path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload/',views.FileUpload.as_view(),name='upload_form'),
 	path('uploads/simple/', views.model_form_upload, name='simple_upload'),
+	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload',views.test_upload,name='test_upload'),
+	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload-files',views.upload_file,name='upload_file'),
 	]
 
 if settings.DEBUG:

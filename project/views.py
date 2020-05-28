@@ -325,7 +325,9 @@ class AwardDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs) 
-        context['form']=CommentForm      
+        context['form']=CommentForm
+        context['upload_form'] = FileForm
+        print(context['upload_form'])   
 
         return context
 @method_decorator(login_required, name='dispatch')
@@ -359,10 +361,43 @@ class FileUpload(CreateView):
 def model_form_upload(request):
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid():            
             form.save()
+
     else:
         form = FileForm()
     return render(request, 'project/model_form_upload.html', {
-        'form': form
-    })
+        'form': form})
+def upload_file(request,org_id,awards_id,award_id):
+    if request.method == 'POST':
+        award = Award.objects.get(pk=award_id)
+        for _file in request.FILES.getlist('file'):
+            request.FILES['file'] = _file
+            form = FileForm(request.POST,request.FILES)
+            if form.is_valid():
+                _new = form.save(commit=False)
+                _new.award = award
+                _new.save()
+        return redirect(Award.objects.get(pk=award_id))
+def test_upload(request,org_id,awards_id,award_id):
+    if request.method == 'POST':
+        award = Award.objects.get(pk=award_id)
+        #form = FileForm(request.POST,request.FILES)
+        for _file in request.FILES.getlist('file'):
+            request.FILES['file'] = _file
+            form = FileForm(request.POST, request.FILES)
+            if form.is_valid():
+                _new = form.save(commit=False)
+                _new.award = award
+                _new.save()
+                
+        '''
+        if form.is_valid:            
+            instance = File(file=request.FILES['file'],award=award)
+            print(instance.award,'IIIIII')
+            instance.save()
+        '''
+            
+    else:
+        form = FileForm()
+    return render(request,'project/test_upload.html',{'form':form,})
