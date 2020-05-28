@@ -267,15 +267,22 @@ class File(models.Model):
     award = models.ForeignKey(Award,on_delete=models.CASCADE,blank=True,null=True)
     file_name = models.CharField(max_length=2000,null=True,blank=True)
     on_drive = models.BooleanField(default=False,null=True,blank=True)
-    file = models.FileField(upload_to='project/%Y/%m/%d',storage='project/%Y/%m/%d',blank=True,null=True)
+    file = models.FileField(upload_to='project/%Y/%m/%d',blank=True,null=True)
     def __str__(self):
         return f"{self.award} {self.file_name}"
     @property
     def filename(self):
-        name = self.file.name.split("/")[1].replace('_',' ').replace('-',' ')
+        name = self.file.name.split("/")[-1].replace('_',' ').replace('-',' ')
         return name
     def get_absolute_url(self):
      return reverse('project:index')
+
+
+@receiver(post_save, sender=File)
+def upload_file(sender, instance, **kwargs):
+    import mimetypes
+    gd = GoogleDriveApi()
+    gd.uploadFile(instance.filename, instance.file.url, mimetypes.guess_type(instance.filename)[0])
 
 
     

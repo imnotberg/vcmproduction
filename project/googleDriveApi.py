@@ -41,6 +41,6 @@ class GoogleDriveApi:
         if folder_name:
             folder_id = self.createFolder(folder_name)
             file_metadata = {'name': name, 'parents': [folder_id]}
-        media = MediaFileUpload(file_path, mimetype=mimetype)
+        media = MediaFileUpload(BASE_DIR + file_path, mimetype=mimetype)
         file = self.service.files().create(body=file_metadata, media_body=media, fields='id').execute()
         return file.get('id')

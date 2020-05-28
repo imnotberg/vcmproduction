@@ -35,7 +35,8 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
 
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload/',views.FileUpload.as_view(),name='upload_form'),
-	] 
+	path('uploads/simple/', views.model_form_upload, name='simple_upload'),
+	]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

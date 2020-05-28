@@ -356,3 +356,13 @@ class FileUpload(CreateView):
         return super(FileUpload,self).form_valid(form)
 
 
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = FileForm()
+    return render(request, 'project/model_form_upload.html', {
+        'form': form
+    })
