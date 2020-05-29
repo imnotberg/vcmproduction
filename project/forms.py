@@ -130,14 +130,6 @@ class MessageCreateForm(forms.Form):
     message = forms.CharField(label='Video Message',
                               help_text='Let us know what you want to communicate, and we will work on a draft script',
                               widget=forms.Textarea)
-class CommentForm(forms.Form):
-    CHOICES = (
-        ('a','A'),
-        ('b','B'),
-        )
-    block = forms.IntegerField(required=False,widget=forms.NumberInput)
-    comment = forms.CharField(widget=forms.Textarea)
-    comment_type = forms.ChoiceField(choices=CHOICES)
 
 class FileForm(ModelForm):
     class Meta:
@@ -145,6 +137,10 @@ class FileForm(ModelForm):
         fields = ['file']
         help_text = {'file':'Select One, Multiple files or One Folder to the project'}
         widgets = {'file':forms.ClearableFileInput(attrs={'multiple':True})}
+class CommentForm(forms.Form):
+    block = forms.IntegerField(required=False,widget=forms.NumberInput,min_value=1,help_text='Please enter the script-block the comment pertains',label='Script Block')
+    comment = forms.CharField(required=True,widget=forms.Textarea)
+
 
 
 

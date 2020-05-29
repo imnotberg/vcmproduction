@@ -38,6 +38,7 @@ urlpatterns = [
 	path('uploads/simple/', views.model_form_upload, name='simple_upload'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload',views.test_upload,name='test_upload'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload-files',views.upload_file,name='upload_file'),
+	path('org/<org_id>/awards/<awards_id>/award/<award_id>/comment',views.comment_view,name='comment_view'),
 	]
 
 if settings.DEBUG:

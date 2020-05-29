@@ -230,7 +230,7 @@ def get_project(request, project_type, project_id):
 @method_decorator(login_required, name='dispatch')
 class AwardFormView(SessionWizardView):
     template_name = 'project/award_form.html'
-    form_list = [AwardForm1, AwardForm2, AwardForm3, AwardForm4, AwardForm5]
+    form_list = [AwardForm1, AwardForm2, AwardForm3, AwardForm4]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         organization = Organization.objects.get(pk=self.kwargs['org_id'])        
@@ -401,3 +401,24 @@ def test_upload(request,org_id,awards_id,award_id):
     else:
         form = FileForm()
     return render(request,'project/test_upload.html',{'form':form,})
+def comment_view(request,org_id,awards_id,award_id):
+    if request.method == 'POST':
+        user = request.user
+        form = CommentForm(request.POST)
+        award = Award.objects.get(pk=award_id)
+        if form.is_valid():
+
+            add = {request.POST['block']:request.POST['comment'],}
+            if award.edit_comments is not None:
+                old = award.edit_comments
+                new = old.update(add)
+                award.edit_comments = json.dumps(new)
+                award.save()
+            else:
+                comment = {request.POST['block']:request.POST['comment'],}
+                jcomment = json.dumps(comment)
+                award.edit_comments = json.loads(jcomment)
+                award.save()
+
+        return redirect(award)
+
