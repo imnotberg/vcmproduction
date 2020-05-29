@@ -33,12 +33,14 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/add/',views.AwardFormView.as_view(),name='award_create'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),
+	path('password_change_done',views.password_change_done,name='password_change_done'),
 
 	#path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload/',views.FileUpload.as_view(),name='upload_form'),
 	path('uploads/simple/', views.model_form_upload, name='simple_upload'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload',views.test_upload,name='test_upload'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload-files',views.upload_file,name='upload_file'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/comment',views.comment_view,name='comment_view'),
+	path('password-change',auth_views.PasswordChangeView.as_view(template_name='project/password_change_form.html'),name='password_change'),
 	]
 
 if settings.DEBUG:

@@ -421,4 +421,6 @@ def comment_view(request,org_id,awards_id,award_id):
                 award.save()
 
         return redirect(award)
+def password_change_done(request):
+    return redirect('project:index')
 

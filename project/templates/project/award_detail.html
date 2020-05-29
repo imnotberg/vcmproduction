@@ -10,10 +10,10 @@
                             <img src="{{object.awards.organization.logo}}" alt=""/>
                         <br>
                         <br>
-                        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#filesModal">
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#filesModal">
                           Add Files
                         </button>
-                        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
                           Make Comment
                         </button>
                         <a class="btn btn-primary btn-block" href="{% url 'project:award_create' org_id=object.awards.organization.id awards_id=object.awards.id %}" role="button">Add Award</a>
