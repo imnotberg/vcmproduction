@@ -254,7 +254,7 @@ class AwardFormView(SessionWizardView):
         organization = awards.organization
         v = Award(awards=awards, award_number=form_data['award_number'], award_name=form_data['award_name'],
                   award_description=form_data['award_description'], award_winner=form_data['award_winner'],
-                  award_comments=form_data['award_comments'], award_assets=form_data['award_assets'],award_project=form_data['award_project'])
+                  award_comments=form_data['award_comments'], award_project=form_data['award_project'])
         v.save()
         return HttpResponseRedirect(reverse('project:award_detail',
                                             kwargs={'org_id': organization.id, 'awards_id': awards_id,
