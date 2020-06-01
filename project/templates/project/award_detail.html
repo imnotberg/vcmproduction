@@ -3,11 +3,12 @@
 {% block content %}
 {% load extras %}
 <div class="container emp-profile">	  
-            <form method="post">
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{object.awards.organization.logo}}" alt=""/>
+                            <a href="{% url 'project:index' %}"><img src="{{object.awards.organization.logo}}" alt=""/></a>
+                          </div>
                         <br>
                         <br>
                         <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#filesModal">
@@ -20,7 +21,7 @@
                         <a class="btn btn-primary btn-block" href="{% url 'project:awards_detail' org_id=object.awards.organization.id pk=object.awards.pk %}" role="button">View {{object.awards.project_name}}</a>
                         <br>  
                         <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Other Project Videos
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -30,55 +31,100 @@
 
   </div>
 </div>   
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profile-head">
-                                    <h5>
-                                        Title: {{object.award_name}} 
-                                    </h5>
-                                    <h6>
-                                      Project: <a href="{% url 'project:awards_detail' org_id=object.awards.organization.pk pk=object.pk %}">{{object.awards.project_name}}
-                                        </a>
-                                    </h6>
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Number</th>
-                                            <td>{{object.award_number}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Winner</th>
-                                            <td>{{object.award_winner}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Description</th>
-                                            <td>{{object.award_description}}</td>
-                                        </tr>
-                                    </table>            
+    </div>
+    <div class="col-md-8">
+      <div class="profile-head">
+        <div class="row">
+          <div class="col-sm-10">
+        <h5>Title: {{object.award_name}}</h5>
+        <h6>Project: <a href="{% url 'project:awards_detail' org_id=object.awards.organization.pk pk=object.pk %}">{{object.awards.project_name}}</a></h6>
+        <table class="table table-bordered">
+            <tr>
+                <th>Number</th>
+                <td>{{object.award_number}}</td>
+            </tr>
+            <tr>
+                <th>Winner</th>
+                <td>{{object.award_winner}}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{object.award_description}}</td>
+            </tr>
+        </table>
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-primary btn-block" href="{% url 'project:award_edit' org_id=object.awards.organization.pk awards_id=object.awards.pk pk=object.pk %}" role="button">Edit</a>
+        </div>
+        </div>            
 
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Jury Comments</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#script" role="tab" aria-controls="profile" aria-selected="false">Script</a>
-                                  </li>
-                                  <li>
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#assets" role="tab" aria-controls="profile" aria-selected="false">Assets</a>
-                                  </li>
-                                  <li>
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#draft" role="tab" aria-controls="profile" aria-selected="false">Draft</a>
-                                  </li>
-                                  <li>
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#final" role="tab" aria-controls="profile" aria-selected="false">Final</a>
-                                </li>
-                            </ul>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Jury Comments</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#script" role="tab" aria-controls="profile" aria-selected="false">Script</a>
+                </li>
+                <li>
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#assets" role="tab" aria-controls="profile" aria-selected="false">Assets</a>
+                </li>
+                <li>
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#draft" role="tab" aria-controls="profile" aria-selected="false">Draft</a>
+                </li>
+                <li>
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#final" role="tab" aria-controls="profile" aria-selected="false">Final</a>
+              </li>
+          </ul>
                         </div>
+                        <!--Edit Button-->
+                        <!--Tab content-->
+                                                <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="home-tab">    
+                                      {{object.award_comments}}
+                            </div>
+                            <div class="tab-pane fade" id="script" role="tabpanel" aria-labelledby="profile-tab">
+                            
+                            {% if object.script|driveify != '#' %}                         
+                                    <iframe src="{{object.script|driveify}}" height="550" width="600">
+
+                                    </iframe>
+                            {% else %}
+                            Script Pending 
+                            {% endif %}
+
+                            </div>
+                <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="profile-tab">
+                  
+                              {% if object.folder_id|folderfy != '#' %}            
+
+                                    <iframe src="{{object.folder_id|folderfy}}#list" style="width:100%; height:600px; border:0;"></iframe>
+                            {% else %}
+                            Assets Pending
+                            {% endif %}
+                            </div>
+                            <div class="tab-pane fade" id="draft" role="tabpanel" aria-labelledby="profile-tab">
+                                <i>If video doesn't play, open in new window</i>
+                           {% if object.draft|vidify != '#' %}                         
+                                <iframe src="https://drive.google.com/file/d/{{object.draft|vidify}}/preview" width="640" height="480"></iframe>
+                            {% else %}
+                            Draft Pending
+                            {% endif %}
+                            </div>
+                 <div class="tab-pane fade" id="final" role="tabpanel" aria-labelledby="profile-tab">
+                                <i>If video doesn't play, open in new window</i>
+                           {% if object.final_draft|vidify != '#' %}                         
+                                <iframe src="https://drive.google.com/file/d/{{object.final_draft|vidify}}/preview" width="640" height="480"></iframe>
+                            {% else %}
+                            Final Pending
+                            {% endif %}
+                            </div>
+                            </div>
+
                     </div>
                     <div class="col-md-2">  	
-                    	<a class="btn btn-primary btn-block" href="{% url 'project:award_edit' org_id=object.awards.organization.pk awards_id=object.awards.pk pk=object.pk %}" role="button">Edit</a>
+                    	
                         <!-- Button to Open the Modal -->          
-                    </form>                   		 
+ 
                     </div>
                 </div>
                 <div class="row">
@@ -152,50 +198,7 @@
   </div>
 </div>
                     <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="home-tab">    
-                                      {{object.award_comments}}
-                            </div>
-                            <div class="tab-pane fade" id="script" role="tabpanel" aria-labelledby="profile-tab">
-                            
-                            {% if object.script|driveify != '#' %}                         
-                                    <iframe src="{{object.script|driveify}}" height="550" width="600">
 
-                                    </iframe>
-                            {% else %}
-                            Script Pending 
-                            {% endif %}
-
-                            </div>
-    						<div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="profile-tab">
-                  
-                            	{% if object.folder_id|folderfy != '#' %}            
-
-                                    <iframe src="{{object.folder_id|folderfy}}#list" style="width:100%; height:600px; border:0;"></iframe>
-                            {% else %}
-                            Assets Pending
-                            {% endif %}
-                            </div>
-                            <div class="tab-pane fade" id="draft" role="tabpanel" aria-labelledby="profile-tab">
-                                <i>If video doesn't play, open in new window</i>
-                           {% if object.draft|vidify != '#' %}                         
-                                <iframe src="https://drive.google.com/file/d/{{object.draft|vidify}}/preview" width="640" height="480"></iframe>
-                            {% else %}
-                            Draft Pending
-                            {% endif %}
-                            </div>
-    						 <div class="tab-pane fade" id="final" role="tabpanel" aria-labelledby="profile-tab">
-                                <i>If video doesn't play, open in new window</i>
-                           {% if object.final_draft|vidify != '#' %}                         
-                                <iframe src="https://drive.google.com/file/d/{{object.final_draft|vidify}}/preview" width="640" height="480"></iframe>
-                            {% else %}
-                            Final Pending
-                            {% endif %}
-                            </div>
-
-    
-
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,19 +9,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{object.logo}}" alt=""/>
-        
+                            <img src="{{object.logo}}" alt=""/>   
+                        </div>
+                        <!--Button items-->
+                        <br>
+                        <div class="profile-work">
+							<a class="btn btn-primary btn-block" href="{% url 'project:awards_create' org_id=object.pk %}" role="button">New Awards Project</a>
+							<a class="btn btn-primary btn-block" href="{% url 'project:message_create' org_id=object.pk %}" role="button">New Corporate Message</a>
+							<a class="btn btn-primary btn-block" href="" role="button">New Promotion Project</a>
+							<a class="btn btn-primary btn-block" href="#" role="button">New Feature Project</a>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="profile-head">
-                                    <h5>
-                                        {{object.name}} 
-                                    </h5>
-                                    <h6>
-                                        
-                                    </h6>
-                                   
+                           <h5>{{object.name}}</h5>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#team" role="tab" aria-controls="home" aria-selected="true">Team</a>
@@ -32,19 +33,8 @@
 
                             </ul>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">                    	
-                        <div class="profile-work">
-							<a class="btn btn-primary btn-block" href="{% url 'project:awards_create' org_id=object.pk %}" role="button">New Awards Project</a>
-							<a class="btn btn-primary btn-block" href="{% url 'project:message_create' org_id=object.pk %}" role="button">New Corporate Message</a>
-							<a class="btn btn-primary btn-block" href="" role="button">New Promotion Project</a>
-							<a class="btn btn-primary btn-block" href="#" role="button">New Feature Project</a>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content profile-tab" id="myTabContent">
+                        <!-- Tab Contnet -->
+                                                <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="team" role="tabpanel" aria-labelledby="home-tab">
                             	<div class="table-responsive">
 									<table class="table table-bordered">		
@@ -96,8 +86,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>           
+                </div>           
 </div>
 
 {% endblock %}
