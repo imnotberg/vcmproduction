@@ -1,6 +1,7 @@
 {% extends 'project/base.html' %}
 {% load crispy_forms_tags %}
 {% load extras %}
+
 {% block content %}
 
 
@@ -9,7 +10,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{object.logo}}" alt=""/>   
+                            <a href="{% url 'project:index' %}">
+                            <img src="{{object.logo}}" alt=""/> </a>  
                         </div>
                         <!--Button items-->
                         <br>
