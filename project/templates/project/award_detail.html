@@ -101,12 +101,14 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="row">
+          <div class="d-flex justify-content-center">
             <form method="post" enctype="multipart/form-data" action="{% url 'project:comment_view' org_id=object.awards.organization.id awards_id=object.awards.id award_id=object.id %}">
     {% csrf_token %}
     {{ form|crispy }}
     <br>
     <button class="btn btn-success" type="submit">Comment</button>
-  </form>
+            </form>
+          </div>
         </div>
       </div>
 

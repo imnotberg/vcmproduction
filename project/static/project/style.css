@@ -12,17 +12,22 @@
 }
 
 body{
-    background: -webkit-linear-gradient(left, white, red);
+    background: -webkit-linear-gradient(left, white, white);
 }
 .emp-profile{
     padding: 3%;
     margin-top: 3%;
     margin-bottom: 3%;
+    border-style: solid;
     border-radius: 0.5rem;
     background: white;
 }
 .profile-img{
     text-align: center;
+    border-style: ridge;
+    border-radius: 10px;
+    
+    
 }
 .profile-img img{
     width: 70%;
@@ -107,9 +112,16 @@ body{
     color: #0062cc;
 }
 .btn-primary{
-    background:grey;
+    background:red;
     border:grey;
 }
+.btn-primary:hover{
+  background-color: black; /* Green */
+  color: white;
+}
 
-
+.btn-primary:active{
+  background-color: red; /* Green */
+  color: white;
+}
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
