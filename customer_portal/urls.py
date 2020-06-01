@@ -27,8 +27,6 @@ urlpatterns = [
 if settings.DEBUG == True:
 	urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_URL)
 	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_URL)
-else:
-    urlpatterns += path('media/<path>', serve,{'document_root': settings.MEDIA_ROOT})
-    urlpatterns += path('static/<path>', serve,{'document_root': settings.STATIC_ROOT})
+
 
 
