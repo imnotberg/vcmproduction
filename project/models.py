@@ -22,7 +22,7 @@ class Organization(models.Model):
         return reverse('project:organization_detail',kwargs={'pk':self.pk})
     @property
     def team(self):
-        team_members = Client.objects.filter(organization=self)
+        team_members = [t.user for t in Client.objects.filter(organization=self)] + [x for x in User.objects.filter(is_staff=True)]
         return team_members
     @property
     def videos(self):

@@ -68,13 +68,13 @@
                                                 <th>Role</th>                   
                                                 <th>Email</th>
                                             </tr>                                   
-                                    {% for t in object.organization.team %}
+                                        {% for t in object.organization.team %}
                                             <tr>
-                                                <td>{{t.user.username}}</a></td>
-                                                <td>{{t.user.first_name}}</td>
-                                                <td>{{t.user.last_name}}</td>
+                                                <td>{{t.username}}</a></td>
+                                                <td>{{t.first_name}}</td>
+                                                <td>{{t.last_name}}</td>
                                                 <td>{{t.role}}</td>
-                                                <td>{{t.user.email}}</td>
+                                                <td>{{t.email}}</td>
                                             </tr>
                                     {% endfor %}
                                         </thead>
