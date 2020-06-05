@@ -41,6 +41,7 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/upload-files',views.upload_file,name='upload_file'),
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/comment',views.comment_view,name='comment_view'),
 	path('password-change',auth_views.PasswordChangeView.as_view(template_name='project/password_change_form.html'),name='password_change'),
+	
 	]
 
 if settings.DEBUG:

@@ -4,8 +4,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-<div class="container emp-profile">
-            
+<div class="container emp-profile">            
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
@@ -14,7 +13,7 @@
         
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="profile-head">
                                     <h5>
                                         Create New Award for {{org}} {{project.name}}
@@ -22,17 +21,6 @@
                                     <h6>
                                         <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
                                     </h6>
-                                   
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-   
-                    </div>
-                    <div class="col-md-8">
                         <form action="" method="post">
                           {% csrf_token %}
                            {{ wizard.management_form }}
@@ -62,9 +50,13 @@
 
                             </form>
                         </div>
-                         
-                      
+                                   
+
+                        </div>
                     </div>
+
+                </div>
+
                 </div>
                        
 

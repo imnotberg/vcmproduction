@@ -12,6 +12,10 @@ from django import forms
 from django.views.generic.list import ListView
 from datetime import datetime
 from formtools.wizard.views import SessionWizardView
+from rest_framework import viewsets
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from .serializers import *
 # from pandas import DataFrame as df
 # import pandas as pd
 from .forms import *
@@ -20,6 +24,9 @@ from . import constants
 import json
 import mimetypes
 import logging
+import os
+
+
 
 
 # Create your views here.
@@ -334,7 +341,7 @@ class AwardDetailView(DetailView):
 class AwardUpdateView(UpdateView):
     model = Award
     template_name = 'project/award_update_form.html'
-    fields = ['award_number', 'award_name', 'award_description', 'award_winner', 'award_project','award_comments','award_assets','script','draft','final_draft']
+    fields = ['award_number', 'award_name', 'award_description', 'award_winner', 'award_project','award_comments']
     widgets = {
         'award_winner':forms.Textarea
     }
@@ -424,3 +431,15 @@ def comment_view(request,org_id,awards_id,award_id):
 def password_change_done(request):
     return redirect('project:index')
 
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+class AwardsViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Awards.objects.all().order_by('pk')
+    serializer_class = AwardsSerializer

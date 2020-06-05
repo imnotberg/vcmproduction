@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'project',
     'crispy_forms',
     'formtools',
+    'rest_framework',
  
 ]
 

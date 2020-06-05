@@ -18,10 +18,12 @@
                     			{% csrf_token %}
                     			<table class="table table-bordered">
                     				{% for f in form %}
-                    				<tr>
+                                    
+                                    <tr>
                     					<th>{{f.label_tag}}</th>
                     					<td>{{f}}</td>
                     				</tr>
+                                    
                     				{% endfor %}
                     			</table>
                     			<div class="d-flex p-2 justify-content-between">
