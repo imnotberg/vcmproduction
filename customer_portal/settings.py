@@ -140,8 +140,19 @@ LOGIN_REDIRECT_URL = '/index/'
 #DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 import dj_database_url
 db_from_env = dj_database_url.config()
+
 DATABASES['default'].update(db_from_env)
 SECRET_KEY = None
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = None
+EMAIL_HOST_PASSWORD = None
+EMAIL_USE_TLS = True
+EMAIL_HOST = None
+EMAIL_PORT = 587
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production'
+SENDGRID_API_KEY = None
+DEFAULT_SEND_GRID_EMAIL = None
+
 try:
     from .local_settings import *
 
@@ -150,6 +161,20 @@ except ImportError:
 
 if SECRET_KEY == None:
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+
+if EMAIL_HOST_USER == None:
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+if EMAIL_HOST_PASSWORD == None:
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+if SENDGRID_API_KEY == None:
+    SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+if DEFAULT_SEND_GRID_EMAIL == None:
+    DEFAULT_SEND_GRID_EMAIL = os.environ['DEFAULT_SEND_GRID_EMAIL']
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT = 587
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production'
+
 
 # SECRET_KEY = 'wo@jzw41h&f$%x(vvq2h^326go!2!_bngyav(g1wgz4!0%cuy('
 
