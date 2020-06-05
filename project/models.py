@@ -235,7 +235,7 @@ class Awards(models.Model):
 
 @receiver(post_save, sender=Awards)
 def update_awards(sender, instance, **kwargs):
-    instance.created_message()
+    #instance.created_message()
     if instance.folder_id is None:
         gd = GoogleDriveApi()
         instance.folder_id = gd.createFolder(instance.project_name)
@@ -275,7 +275,7 @@ class Award(models.Model):
 
 @receiver(post_save, sender=Award)
 def update_award(sender, instance, **kwargs):
-    instance.created_message()
+    #instance.created_message()    
     if instance.folder_id is None:
         gd = GoogleDriveApi()
         folder_id = gd.createFolder(instance.award_name, instance.awards.folder_id)
@@ -312,8 +312,6 @@ class File(models.Model):
 
 @receiver(post_save, sender=File)
 def upload_file(sender, instance, **kwargs):
-    print(instance.__dict__,'IDDDD')
-    print(type(instance),'ffffff')
     import mimetypes
     gd = GoogleDriveApi()
     gd.uploadFile(instance.filename, instance.file.url, instance.award.folder_id,mimetypes.guess_type(instance.filename)[0])

@@ -161,7 +161,16 @@ except ImportError:
 
 if SECRET_KEY == None:
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
-
+EMAIL_HOST_USER = 'amweisberg'
+EMAIL_HOST_PASSWORD = 'R0bin2013'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production:'
+SENDGRID_API_KEY = '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'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_SEND_GRID_EMAIL = 'odsswordfight@gmail.com'
+'''
 if EMAIL_HOST_USER == None:
     EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 if EMAIL_HOST_PASSWORD == None:
@@ -174,7 +183,8 @@ if DEFAULT_SEND_GRID_EMAIL == None:
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production'
+'''
 
 
-# SECRET_KEY = 'wo@jzw41h&f$%x(vvq2h^326go!2!_bngyav(g1wgz4!0%cuy('
+
 
