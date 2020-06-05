@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import modelform_factory
@@ -25,6 +26,8 @@ import json
 import mimetypes
 import logging
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 
@@ -443,3 +446,16 @@ class AwardsViewSet(viewsets.ModelViewSet):
     """
     queryset = Awards.objects.all().order_by('pk')
     serializer_class = AwardsSerializer
+def email(request):
+    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)  
+    subject = 'This is a test email' 
+    text_content = 'This is text content'
+    html_content = '<strong>This is html content</strong>'
+    message = Mail(from_email=settings.DEFAULT_SEND_GRID_EMAIL,to_emails=['aaron.m.weisberg@gmail.com'],subject=subject,plain_text_content=text_content,html_content=html_content)
+    response = sg.send(message)
+    print(response)
+    print(response.__dict__)
+
+    return redirect('project:index')
+
+
