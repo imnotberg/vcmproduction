@@ -152,7 +152,8 @@ EMAIL_PORT = 587
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production'
 SENDGRID_API_KEY = None
 DEFAULT_SEND_GRID_EMAIL = None
-
+EMAIL_SECRET = None
+EMAIL_CLIENT = None
 try:
     from .local_settings import *
     
