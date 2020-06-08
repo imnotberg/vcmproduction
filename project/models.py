@@ -7,9 +7,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.db import models
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from . import constants
+from O365 import Account
 
 
 # Create your models here.
@@ -213,11 +212,17 @@ class Awards(models.Model):
         team_email = self.organization.team_email
         emaillist = list(set([team_email[0],team_email[1],team_email[2]]))
         subject = f"New Awards Project created for {self.organization.name}"
-        html_content = '<h4>Thank you for adding 'f"{self.project_name}"' to the production portal. You can view all updates to this project and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.organization.id}/awards/{self.id}"'">Link</a></h4>'
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        html_content = '<h4>Thank you for adding 'f"{self.project_name}"' to the production portal. You can view all updates to this project and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.organization.id}/awards/{self.id}"'">'f"{self.project_name}"'</a></h4>'        
         text_content = f"Thank you for adding {self.project_name} to the production portal. You can view the progress and make changes to the project at http://www.virtuous-circle/org/{self.organization.id}/awards/{self.pk}"
-        message = Mail(from_email=settings.DEFAULT_SEND_GRID_EMAIL,to_emails=emaillist,subject=subject,plain_text_content=text_content,html_content=html_content)
-        response = sg.send(message)
+        
+        credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        account = Account(credentials)
+        message = account.new_message()
+        message.subject = subject
+        message.body = html_content
+        message.to.add([emaillist])
+        message.send()
+        
         
     def get_absolute_url(self):
         return reverse('project:awards_detail', kwargs={'org_id': self.organization.id, 'pk': self.pk})
@@ -235,7 +240,7 @@ class Awards(models.Model):
 
 @receiver(post_save, sender=Awards)
 def update_awards(sender, instance, **kwargs):
-    #instance.created_message()
+    instance.created_message()    
     if instance.folder_id is None:
         gd = GoogleDriveApi()
         instance.folder_id = gd.createFolder(instance.project_name)
@@ -266,16 +271,22 @@ class Award(models.Model):
         team_email = self.awards.organization.team_email
         emaillist = list(set([team_email[0],team_email[1],team_email[2]]))
         subject = f"New Award added to {self.awards.project_name}"
-        html_content = '<h4>Thank you for adding 'f"{self.award_name}"' to the production portal. You can view all updates to this videos and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">Link</a></h4>'
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        html_content = '<h4>Thank you for adding 'f"{self.award_name}"' to the production portal. You can view all updates to this videos and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'        
         text_content = f"Thank you for adding {self.award_name} to the production portal. You can view the progress and make changes to the project at http://www.virtuous-circle/org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"
-        message = Mail(from_email=settings.DEFAULT_SEND_GRID_EMAIL,to_emails=emaillist,subject=subject,plain_text_content=text_content,html_content=html_content)
-        response = sg.send(message)
+        credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        account = Account(credentials)
+        message = account.new_message()
+        message.subject = subject
+        message.body = html_content
+        message.to.add([emaillist])
+        message.send()
+        
+       
 
 
 @receiver(post_save, sender=Award)
 def update_award(sender, instance, **kwargs):
-    #instance.created_message()    
+    instance.created_message()    
     if instance.folder_id is None:
         gd = GoogleDriveApi()
         folder_id = gd.createFolder(instance.award_name, instance.awards.folder_id)

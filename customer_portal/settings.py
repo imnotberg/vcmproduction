@@ -155,36 +155,17 @@ DEFAULT_SEND_GRID_EMAIL = None
 
 try:
     from .local_settings import *
+    
 
 except ImportError:
     pass
 
 if SECRET_KEY == None:
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
-EMAIL_HOST_USER = 'amweisberg'
-EMAIL_HOST_PASSWORD = 'R0bin2013'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production:'
-SENDGRID_API_KEY = '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'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_SEND_GRID_EMAIL = 'odsswordfight@gmail.com'
-'''
-if EMAIL_HOST_USER == None:
-    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-if EMAIL_HOST_PASSWORD == None:
-    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-if SENDGRID_API_KEY == None:
-    SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-if DEFAULT_SEND_GRID_EMAIL == None:
-    DEFAULT_SEND_GRID_EMAIL = os.environ['DEFAULT_SEND_GRID_EMAIL']
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_PORT = 587
-ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Virtuous Circle Production'
-'''
-
+if EMAIL_SECRET == None:
+    EMAIL_SECRET = os.environ['EMAIL_SECRET']
+if EMAIL_CLIENT == None:
+    EMAIL_CLIENT = os.environ['EMAIL_CLIENT']
 
 
 
