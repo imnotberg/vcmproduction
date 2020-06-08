@@ -266,6 +266,7 @@ class AwardFormView(SessionWizardView):
                   award_description=form_data['award_description'], award_winner=form_data['award_winner'],
                   award_comments=form_data['award_comments'], award_project=form_data['award_project'])
         v.save()
+        v.created_message()
         return HttpResponseRedirect(reverse('project:award_detail',
                                             kwargs={'org_id': organization.id, 'awards_id': awards_id,
                                                     'pk': v.pk}))
@@ -314,6 +315,7 @@ class AwardsCreateView(CreateView):
         print(context,'ctx')
         instance = form.save(commit=False)
         instance.organization = context['organization']
+        instance.created_message()
         instance.save()
         return super().form_valid(form)
 

@@ -239,9 +239,10 @@ class Awards(models.Model):
 
 
 @receiver(post_save, sender=Awards)
-def update_awards(sender, instance, **kwargs):
-    instance.created_message()    
+def update_awards(sender, instance, **kwargs):    
+    #instance.created_message()    
     if instance.folder_id is None:
+        print('here three times 246')
         gd = GoogleDriveApi()
         instance.folder_id = gd.createFolder(instance.project_name)
         instance.save()
@@ -271,13 +272,13 @@ class Award(models.Model):
         team_email = self.awards.organization.team_email
         emaillist = list(set([team_email[0],team_email[1],team_email[2]]))
         subject = f"New Award added to {self.awards.project_name}"
-        html_content = '<h4>Thank you for adding 'f"{self.award_name}"' to the production portal. You can view all updates to this videos and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'        
+        html_content = '<h4>Thank you for adding 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'        
         text_content = f"Thank you for adding {self.award_name} to the production portal. You can view the progress and make changes to the project at http://www.virtuous-circle/org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"
         credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
         account = Account(credentials)
         message = account.new_message()
         message.subject = subject
-        message.body = html_content
+        message.body = html_content        
         message.to.add([emaillist])
         message.send()
         
@@ -286,7 +287,7 @@ class Award(models.Model):
 
 @receiver(post_save, sender=Award)
 def update_award(sender, instance, **kwargs):
-    instance.created_message()    
+    #instance.created_message()    
     if instance.folder_id is None:
         gd = GoogleDriveApi()
         folder_id = gd.createFolder(instance.award_name, instance.awards.folder_id)
