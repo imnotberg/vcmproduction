@@ -49,7 +49,7 @@ def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            print('form is fine!')
+            
             u = form.save(commit=False)
             profile = Client(user=u)
             u.save()
@@ -192,7 +192,7 @@ class PromotionFormView(SessionWizardView):
                       feature_1=form_data['feature_1'], feature_4=form_data['feature_4'],
                       feature_2=form_data['feature_2'], feature_3=form_data['feature_3'],
                       feature_5=form_data['feature_5'], guests=form_data['guests'], assets=form_data['assets'])
-        print(p.__dict__)
+        
         p.save()
         return HttpResponseRedirect(reverse('project:promotion_detail', kwargs={'partner_id': client.pk, 'pk': p.pk}))
 
@@ -312,7 +312,7 @@ class AwardsCreateView(CreateView):
         return context
     def form_valid(self, form):        
         context = self.get_context_data()
-        print(context,'ctx')
+        
         instance = form.save(commit=False)
         instance.organization = context['organization']
         instance.created_message()
@@ -419,7 +419,6 @@ def comment_view(request,org_id,awards_id,award_id):
         form = CommentForm(request.POST)
         award = Award.objects.get(pk=award_id)
         if form.is_valid():
-
             add = {request.POST['block']:request.POST['comment'],}
             if award.edit_comments is not None:
                 old = award.edit_comments
@@ -431,6 +430,7 @@ def comment_view(request,org_id,awards_id,award_id):
                 jcomment = json.dumps(comment)
                 award.edit_comments = json.loads(jcomment)
                 award.save()
+
 
         return redirect(award)
 def password_change_done(request):
@@ -455,8 +455,7 @@ def email(request):
     html_content = '<strong>This is html content</strong>'
     message = Mail(from_email=settings.DEFAULT_SEND_GRID_EMAIL,to_emails=['aaron.m.weisberg@gmail.com'],subject=subject,plain_text_content=text_content,html_content=html_content)
     response = sg.send(message)
-    print(response)
-    print(response.__dict__)
+
 
     return redirect('project:index')
 

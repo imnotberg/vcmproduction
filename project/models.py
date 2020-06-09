@@ -306,7 +306,23 @@ class Comment(models.Model):
     comment = models.CharField(max_length=2000)
     process_comment = models.CharField(max_length=200,choices=PROCESS_STEPS,null=True)
     info = JSONField()
-    
+
+
+    def send_comment(sender,instance,**kwargs):
+        credentials = (settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        subject = 'New Comment'
+        body = f"From: {instance.user.username}"
+        body += '\n'f"Message: {instance.comment}"
+        body += '\n'f"{self.info}"
+        account = Account(credentials)
+        message= account.new_message()
+        message.body = body
+        message.to.add(User.objects.get(pk=1).email)
+        message.subject = 'New comment'
+        message.send()
+
+
+
 class File(models.Model):
     award = models.ForeignKey(Award,on_delete=models.CASCADE,blank=True,null=True)
     file_name = models.CharField(max_length=2000,null=True,blank=True)

@@ -10,13 +10,14 @@ def video_list(value):
 	
 @register.filter
 def prt(value):
-	print(value)
+	return print(value)
+	
 @register.filter
 def name(value):
-	print(value,'valeu')
+	
 	try:
 		if value.type == 'awards':
-			print('right here')
+			
 			return value.project_name
 		elif value.type == 'promotion':
 			return value.name
@@ -37,13 +38,13 @@ def client(value):
 	return Client.objects.get(user_id=value).pk
 @register.filter
 def driveify(value):
-	print(value)
+	
 	try:		
 		slug = slug = re.findall('id=(.+)',value)[0]
 		url = f"https://docs.google.com/file/d/{slug}/preview?usp=drivesdk"
 		return url
 	except:
-		print('no slug')
+		
 		return "#"
 @register.filter
 def folderfy(value):
@@ -54,11 +55,11 @@ def folderfy(value):
 		return "#"
 @register.filter
 def vidify(value):
-	print('cididd')
+	
 	#https://drive.google.com/file/d/1ARSiQ4zKy7Iu2MvrYEhViPBozI2GqJR3/view?usp=sharing
 	try:
 		slug = re.findall('id=(.+)',value)[0]
-		print(slug)
+		
 		return slug
 	except:
 		return '#'
