@@ -299,7 +299,24 @@ def message_create(request, org_id):
 @method_decorator(login_required, name='dispatch')
 class MessageDetailView(DetailView):
     model = Message
+@method_decorator(login_required,name='dispatch')
+class AwardsUpdateView(UpdateView):
+    model = Awards 
+    form_class = ProjectForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        organization = Organization.objects.get(pk=self.kwargs['org_id'])        
+        context['organization'] = organization
+        return context
+    def form_valid(self, form):        
+        context = self.get_context_data()
+        
+        instance = form.save(commit=False)
+        instance.organization = context['organization']
+        instance.created_message()
+        instance.save()
+        return super().form_valid(form)
 @method_decorator(login_required, name='dispatch')
 class AwardsCreateView(CreateView):    
     model = Awards   

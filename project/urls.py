@@ -30,6 +30,7 @@ urlpatterns = [
 	path('org/<org_id>/message/<pk>',views.MessageDetailView.as_view(),name='message_detail'),
 	path('org/<org_id>/awards-create',views.AwardsCreateView.as_view(),name='awards_create'),
 	path('org/<org_id>/awards/<pk>',views.AwardsDetailView.as_view(),name='awards_detail'),
+	path('org/<org_id>/awards/<pk>/edit',views.AwardsUpdateView.as_view(),name='awards_update'),
 	path('org/<org_id>/awards/<awards_id>/award/add/',views.AwardFormView.as_view(),name='award_create'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>',views.AwardDetailView.as_view(),name='award_detail'),
 	path('org/<org_id>/awards/<awards_id>/award/<pk>/edit',views.AwardUpdateView.as_view(),name='award_edit'),

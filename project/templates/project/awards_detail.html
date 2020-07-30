@@ -15,7 +15,7 @@
                         <!--Button Items -->
                             <div class="profile-work">
                             <a class="btn btn-primary btn-block" href="{% url 'project:award_create' org_id=object.organization.id awards_id=object.id %}" role="button" data-toggle="popover" data-content="Add a new award video to project">Add Award</a>  
-                            <a href="" class="btn btn-primary btn-block">Edit Project</a>
+                            <a href="{% url 'project:awards_update' org_id=object.organization.id pk=object.pk %}" class="btn btn-primary btn-block">Edit Project</a>
                         </div>
                     </div>
                     <div class="col-md-8">
