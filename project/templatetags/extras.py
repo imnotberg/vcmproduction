@@ -40,7 +40,7 @@ def client(value):
 def driveify(value):
 	
 	try:		
-		slug = slug = re.findall('id=(.+)',value)[0]
+		slug = re.findall('id=(.+)',value)[0]
 		url = f"https://docs.google.com/file/d/{slug}/preview?usp=drivesdk"
 		return url
 	except:

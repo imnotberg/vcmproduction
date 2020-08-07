@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-sm-10">
         <h5>Title: {{object.award_name}}</h5>
-        <h6>Project: <a href="{% url 'project:awards_detail' org_id=object.awards.organization.pk pk=object.pk %}">{{object.awards.project_name}}</a></h6>
+        <h6>Project: <a href="{% url 'project:get_project' project_type=object.awards.type project_id=object.awards.id %}">{{object.awards.project_name}}</a></h6>
         <table class="table table-bordered">
             <tr>
                 <th>Number</th>
