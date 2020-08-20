@@ -50,7 +50,7 @@ class Organization(models.Model):
         return Message.objects.filter(organization=self)
     @property
     def projects(self):
-        return [a for a in self.awards] + [p for p in self.promotion] + [c for c in self.message]
+        return [a for a in self.awards if a.active==True] + [p for p in self.promotion] + [c for c in self.message]
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -197,6 +197,7 @@ class Awards(models.Model):
     date = models.DateField()
     folder_id = models.CharField(max_length=100, null=True, blank=True)
     number_of_awards = models.PositiveSmallIntegerField()
+    active = models.BooleanField(default=True)
 
     def get_object(self,queryset=None):
         obj = super(PostDetailView, self).get_object()
@@ -240,16 +241,17 @@ class Awards(models.Model):
 
 @receiver(post_save, sender=Awards)
 def update_awards(sender, instance, **kwargs):    
-    #instance.created_message()    
+    #instance.created_message()       
     if instance.folder_id is None:
         print('here three times 246')
         gd = GoogleDriveApi()
         instance.folder_id = gd.createFolder(instance.project_name)
         instance.save()
 
+
 class Award(models.Model):
     awards = models.ForeignKey(Awards, on_delete=models.CASCADE)
-    award_number = models.PositiveSmallIntegerField()
+    award_number = models.PositiveSmallIntegerField(null=True)
     award_name = models.CharField(max_length=200000)
     award_description = models.TextField(blank=True,null=True)
     award_winner = models.CharField(max_length=2000)
@@ -261,13 +263,32 @@ class Award(models.Model):
     final_draft = models.URLField(null=True, blank=True, default='#')
     edit_comments = JSONField(null=True,blank=True)
     folder_id = models.CharField(max_length=100, null=True, blank=True)
+    __original_script = None
+    __original_draft = None
+    __original_final = None
 
     def __str__(self):
         return f"{self.awards.organization.name} {self.awards.project_name} {str(self.award_number)} {self.award_name}"
+    
 
     def get_absolute_url(self):
         return reverse('project:award_detail',
                        kwargs={'pk': self.pk, 'org_id': self.awards.organization.id, 'awards_id': self.awards.id})
+    def updated_script(self):
+        team_email = self.awards.organization.team_email
+        #emaillist = list(set(team_email[0],team_email[1],team_email[3]))
+        subject = f"Updated Script added for video: {self.awards.project_name} {self.award_name}"
+        html_content = '<h4>We have updated a script for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly." 
+        text_content = 'We have updated a script for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly." 
+
+        credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        account = Account(credentials)
+        message = account.new_message()
+        message.subject = subject
+        message.body = html_content        
+        message.to.add([team_email])
+        message.send()
+
     def created_message(self):
         team_email = self.awards.organization.team_email
         emaillist = list(set([team_email[0],team_email[1],team_email[2]]))
@@ -281,6 +302,16 @@ class Award(models.Model):
         message.body = html_content        
         message.to.add([emaillist])
         message.send()
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        if self.script != self.__original_script:
+            print('here it is!')
+            self.updated_script()
+        else:
+            pass
+        super(Award,self).save(force_insert,force_update,*args,**kwargs)
+        self.__original_script = self.script
+
         
        
 

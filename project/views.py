@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
+
 from django import forms
 from django.views.generic.list import ListView
 from datetime import datetime
@@ -219,11 +220,19 @@ class OrganizationDetailView(DetailView):
 
     def get_object(self,queryset=None):
         obj = super(OrganizationDetailView, self).get_object()
-       
+
         if Client.objects.get(user=self.request.user).organization != obj and self.request.user.id != 1:
             obj = Client.objects.get(user=self.request.user).organization     
             return obj
         return obj
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.kwargs['pk']=='1':            
+            context['projects'] = [x for x in Awards.objects.filter(active=True)] + [y for y in Promotion.objects.all()] + [z for z in Message.objects.all()]            
+        return context
+
 
 
 
@@ -475,5 +484,4 @@ def email(request):
 
 
     return redirect('project:index')
-
 
