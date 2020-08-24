@@ -446,7 +446,7 @@ def comment_view(request,org_id,awards_id,award_id):
         award = Award.objects.get(pk=award_id)
         if form.is_valid():
             add = {request.POST['block']:request.POST['comment'],}
-            if award.edit_comments is not None:
+            if award.edit_comments is not None and award.edit_comments != 'null':
                 old = award.edit_comments
                 new = old.update(add)
                 award.edit_comments = json.dumps(new)
