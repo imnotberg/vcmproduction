@@ -9,6 +9,9 @@ from django.urls import reverse
 from django.db import models
 from . import constants
 from O365 import Account
+from picklefield.fields import PickledObjectField
+import pandas as pd 
+from pandas import DataFrame as df
 
 
 # Create your models here.
@@ -261,7 +264,7 @@ class Award(models.Model):
     script = models.URLField(null=True, blank=True, default='#')
     draft = models.URLField(null=True, blank=True, default='#')
     final_draft = models.URLField(null=True, blank=True, default='#')
-    edit_comments = JSONField(null=True,blank=True)
+    edit_comments = PickledObjectField(null=True)
     folder_id = models.CharField(max_length=100, null=True, blank=True)
     __original_script = None
     __original_draft = None
@@ -286,8 +289,8 @@ class Award(models.Model):
         message = account.new_message()
         message.subject = subject
         message.body = html_content        
-        message.to.add([team_email])
-        message.send()
+        message.to.add([User.objects.get(pk=1).email])
+        #message.send()
 
     def created_message(self):
         team_email = self.awards.organization.team_email
@@ -302,7 +305,7 @@ class Award(models.Model):
         message.body = html_content        
         message.to.add([emaillist])
         message.send()
-
+    
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.script != self.__original_script:
             print('here it is!')
@@ -311,6 +314,7 @@ class Award(models.Model):
             pass
         super(Award,self).save(force_insert,force_update,*args,**kwargs)
         self.__original_script = self.script
+    
 
         
        

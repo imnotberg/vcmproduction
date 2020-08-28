@@ -43,7 +43,7 @@ urlpatterns = [
 	path('org/<org_id>/awards/<awards_id>/award/<award_id>/comment',views.comment_view,name='comment_view'),
 	path('password-change',auth_views.PasswordChangeView.as_view(template_name='project/password_change_form.html'),name='password_change'),
 	path('email',views.email,name='email'),
-
+	path('comments-update',views.comments_update,name='comments-update'),
 	]
 
 if settings.DEBUG:

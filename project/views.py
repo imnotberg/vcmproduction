@@ -441,21 +441,30 @@ def test_upload(request,org_id,awards_id,award_id):
     return render(request,'project/test_upload.html',{'form':form,})
 def comment_view(request,org_id,awards_id,award_id):
     if request.method == 'POST':
+        print(request.POST)
         user = request.user
         form = CommentForm(request.POST)
         award = Award.objects.get(pk=award_id)
+        block = request.POST.get('block',None)
+        comment_type = request.POST.get('comment_type',None)
+        time = request.POST.get('time',None)
+        comment = request.POST.get('comment',None)        
         if form.is_valid():
-            add = {request.POST['block']:request.POST['comment'],}
-            if award.edit_comments is not None and award.edit_comments != 'null':
-                old = award.edit_comments
-                new = old.update(add)
-                award.edit_comments = json.dumps(new)
+            if award.edit_comments is None:
+                newframe = df(columns=['BLOCK','COMMENT_TYPE','TIME','COMMENT'])
+                series = pd.Series([block,comment_type,time,comment],index=['BLOCK','COMMENT_TYPE','TIME','COMMENT'])                
+                newframe = newframe.append(series,ignore_index=True)
+                award.edit_comments = newframe
                 award.save()
+                 
             else:
-                comment = {request.POST['block']:request.POST['comment'],}
-                jcomment = json.dumps(comment)
-                award.edit_comments = json.loads(jcomment)
+                print('we are here')
+                comment_dict = {'BLOCK':block,'COMMENT_TYPE':comment_type,'TIME':time,'COMMENT':comment,} 
+                award.edit_comments = award.edit_comments.append(comment_dict,ignore_index=True)
                 award.save()
+                
+
+
 
 
         return redirect(award)
@@ -484,4 +493,16 @@ def email(request):
 
 
     return redirect('project:index')
+@login_required
+def comments_update(request):
+    if request.user != User.objects.get(pk=1):
+        client = Client.objects.get(user=request.user)
+        organization = client.organization        
+        return redirect(organization)
+
+    comments = [{'AWARDNAME':x.award_name,'AWARDNUMBER':x.award_number,'COMMENTS':x.edit_comments} for x in Award.objects.all() if x.edit_comments is not None]
+    context = {'comments':comments,}
+
+    return render(request,'project/comments_list.html',context)
+
 

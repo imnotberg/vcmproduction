@@ -1,5 +1,5 @@
 {% extends 'project/base.html' %}
-{% load crispy_forms_tags %}
+{% load bootstrap4 %}
 {% block content %}
 {% load extras %}
 <div class="container emp-profile">	  
@@ -74,6 +74,9 @@
                 <li>
                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#final" role="tab" aria-controls="profile" aria-selected="false">Final</a>
               </li>
+              <li>
+                  <a class="nav-link" id="comments-tab" data-toggle="tab" href="#edit_comments" role="tab" aria-controls="profile" aria-selected="false">Edit Comments</a>
+              </li>
           </ul>
                         </div>
                         <!--Edit Button-->
@@ -118,6 +121,30 @@
                             Final Pending
                             {% endif %}
                             </div>
+                            <div class="tab-pane fade" id="edit_comments" role="tabpanel" aria-labelledby="profile-tab">
+                              <div class="table-responsive">
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>Type</th>
+                                      <th>Block</th>
+                                      <th>Time</th>
+                                      <th>Comment</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for a,b in object.edit_comments.iterrows %}
+                                    <tr>
+                                      <td>{{b.COMMENT_TYPE|default_if_none:""}}</td>
+                                      <td>{{b.BLOCK|default_if_none:""}}</td>
+                                      <td>{{b.TIME|default_if_none:""}}</td>
+                                      <td>{{b.COMMENT|default_if_none:""}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
                             </div>
 
                     </div>
@@ -145,17 +172,33 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        <div class="row">
-          <div class="d-flex justify-content-center">
+      <div class="modal-body"> 
+         
             <form method="post" enctype="multipart/form-data" action="{% url 'project:comment_view' org_id=object.awards.organization.id awards_id=object.awards.id award_id=object.id %}">
     {% csrf_token %}
-    {{ form|crispy }}
+    <div class="row">
+      <div class="col-sm-6">
+        {% bootstrap_field form.block %}
+      </div>
+      <div class="col-sm-6">
+        {% bootstrap_field form.comment_type %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-2 col-md-6 col-md-offset-0">
+      {% bootstrap_field form.time %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        {% bootstrap_field form.comment %}
+      </div>
+    </div>
     <br>
     <button class="btn btn-success" type="submit">Comment</button>
             </form>
-          </div>
-        </div>
+          
+        
       </div>
 
       <!-- Modal footer -->
@@ -181,7 +224,7 @@
         <div class="row">
   <form method="post" enctype="multipart/form-data" action="{% url 'project:upload_file' org_id=object.awards.organization.id awards_id=object.awards.id award_id=object.id %}">
     {% csrf_token %}
-    {{ upload_form|crispy }}
+    {% bootstrap_form upload_form %}
     <br>
     <button class="btn btn-success" type="submit">Upload</button>
   </form>

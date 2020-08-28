@@ -139,6 +139,8 @@ class FileForm(ModelForm):
         widgets = {'file':forms.ClearableFileInput(attrs={'multiple':True})}
 class CommentForm(forms.Form):
     block = forms.IntegerField(required=False,widget=forms.NumberInput,min_value=1,help_text='Please enter the script-block the comment pertains',label='Script Block')
+    comment_type = forms.ChoiceField(required=False,choices=(('',''),('Script','Script'),('Draft','Draft'),('Final','Final'),('General','General')),label='Comment Type')
+    time = forms.CharField(required=False,help_text='Time of video for comment')
     comment = forms.CharField(required=True,widget=forms.Textarea)
 
 

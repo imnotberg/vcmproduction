@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'formtools',
     'rest_framework',
+    'bootstrap4',
  
 ]
 
