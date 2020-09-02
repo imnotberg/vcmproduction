@@ -289,8 +289,8 @@ class Award(models.Model):
         message = account.new_message()
         message.subject = subject
         message.body = html_content        
-        message.to.add([User.objects.get(pk=1).email])
-        #message.send()
+        message.to.add([team_email])
+        message.send()
 
     def created_message(self):
         team_email = self.awards.organization.team_email

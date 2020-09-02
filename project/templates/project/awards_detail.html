@@ -50,7 +50,7 @@
                                         {% for v in object.awards_list %}
                                         <tr>
                                             <td><a href="{% url 'project:award_detail' org_id=v.awards.organization.id awards_id=v.awards.id pk=v.pk %}">{{v.award_number}}</a></td>
-                                            <td><a href="{% url 'project:award_detail' org_id=v.awards.organization.id awards_id=v.awards.id pk=v.pk %}">{{v.award_name}}</a></td>
+                                            <td><a href="{% url 'project:award_detail' org_id=v.awards.organization.id awards_id=v.awards.id pk=v.pk %}">{{v.award_name}} {{v.award_project}}</a></td>
 
                                         </tr>
                                         {% endfor %}
