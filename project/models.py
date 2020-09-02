@@ -290,7 +290,7 @@ class Award(models.Model):
         message.subject = subject
         message.body = html_content        
         message.to.add([team_email])
-        message.send()
+        #message.send()
 
     def created_message(self):
         team_email = self.awards.organization.team_email
