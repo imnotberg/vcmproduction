@@ -26,7 +26,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     {% for v in object.awards.awards_list %}
-    <a class="dropdown-item" href="{%  url 'project:award_detail' org_id=v.awards.organization.pk awards_id=v.awards.id pk=v.pk %}">{{v.award_number}} {{v.award_name}}</a>
+    <a class="dropdown-item" href="{%  url 'project:award_detail' org_id=v.awards.organization.pk awards_id=v.awards.id pk=v.pk %}">{{v.award_number}} {{v.award_name}} {{v.award_project}}</a>
     {% endfor %}
 
   </div>
