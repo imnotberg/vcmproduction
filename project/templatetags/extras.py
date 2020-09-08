@@ -38,13 +38,12 @@ def client(value):
 	return Client.objects.get(user_id=value).pk
 @register.filter
 def driveify(value):
-	
+	print(value,'!!!!!')	
 	try:		
 		slug = re.findall('id=(.+)',value)[0]
 		url = f"https://docs.google.com/file/d/{slug}/preview?usp=drivesdk"
 		return url
-	except:
-		
+	except:		
 		return "#"
 @register.filter
 def folderfy(value):

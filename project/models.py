@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.fields import JSONField
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.db import models
@@ -208,7 +208,9 @@ class Awards(models.Model):
             print('you shall not pass')
         return obj
 
-
+    def project_comments(self):
+        all_comments = pd.concat([pd.concat([df([[x.award_number,x.award_name,x.award_project]],columns=['NUMBER','AWARD','PROJECT']),x.edit_comments],axis=1) for x in self.awards_list])
+        return all_comments
     def __str__(self):
         return f"{self.organization.name} {self.project_name} {self.date.year}"
 
@@ -277,6 +279,21 @@ class Award(models.Model):
     def get_absolute_url(self):
         return reverse('project:award_detail',
                        kwargs={'pk': self.pk, 'org_id': self.awards.organization.id, 'awards_id': self.awards.id})
+    def updated_draft(self):
+        team_email = self.awards.organization.team_email
+        print(team_email)
+        subject = f"Updated Draft added for video: {self.awards.project_name} {self.award_name}"
+        html_content = '<h4>We have updated a draft for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly."
+        text_content = 'We have updated a draft for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly." 
+        credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        account = Account(credentials)
+        message = account.new_message()
+        message.subject = subject
+        message.body = html_content        
+        message.to.add([team_email])
+        message.send()
+
+
     def updated_script(self):
         team_email = self.awards.organization.team_email
         #emaillist = list(set(team_email[0],team_email[1],team_email[3]))
@@ -290,7 +307,7 @@ class Award(models.Model):
         message.subject = subject
         message.body = html_content        
         message.to.add([team_email])
-        #message.send()
+        message.send()
 
     def created_message(self):
         team_email = self.awards.organization.team_email
@@ -304,19 +321,7 @@ class Award(models.Model):
         message.subject = subject
         message.body = html_content        
         message.to.add([emaillist])
-        message.send()
-    
-    def save(self, force_insert=False, force_update=False, *args, **kwargs):
-        if self.script != self.__original_script:
-            print('here it is!')
-            self.updated_script()
-        else:
-            pass
-        super(Award,self).save(force_insert,force_update,*args,**kwargs)
-        self.__original_script = self.script
-    
-
-        
+        message.send()       
        
 
 
@@ -328,7 +333,6 @@ def update_award(sender, instance, **kwargs):
         folder_id = gd.createFolder(instance.award_name, instance.awards.folder_id)
         instance.folder_id = folder_id
         instance.save()
-
 
 class Comment(models.Model):
     PROCESS_STEPS = (
@@ -372,6 +376,17 @@ class File(models.Model):
     def get_absolute_url(self):
      return reverse('project:index')
 
+@receiver(pre_save,sender=Award)
+def video_update(sender,instance,**kwargs):
+    try:
+        obj = sender.objects.get(pk=instance.pk)
+    except sender.DoesNotExist:
+        print('new file')
+    else:
+        if not obj.draft == instance.draft:
+            obj.updated_draft()
+        if not obj.script == instance.script:
+            obj.updated_script()
 
 @receiver(post_save, sender=File)
 def upload_file(sender, instance, **kwargs):
