@@ -108,7 +108,7 @@
                             <div class="tab-pane fade" id="draft" role="tabpanel" aria-labelledby="profile-tab">
                                 <i>If video doesn't play, open in new window</i>
                            {% if object.draft|vidify != '#' %}                         
-                                <iframe src="https://drive.google.com/file/d/{{object.draft|vidify}}/preview" width="640" height="480"></iframe>
+                                <iframe src="https://drive.google.com/file/d/{{object.draft|vidify}}/preview" width="720" height="431"></iframe>
                             {% else %}
                             Draft Pending
                             {% endif %}
@@ -116,7 +116,7 @@
                  <div class="tab-pane fade" id="final" role="tabpanel" aria-labelledby="profile-tab">
                                 <i>If video doesn't play, open in new window</i>
                            {% if object.final_draft|vidify != '#' %}                         
-                                <iframe src="https://drive.google.com/file/d/{{object.final_draft|vidify}}/preview" width="640" height="480"></iframe>
+                                <iframe src="https://drive.google.com/file/d/{{object.final_draft|vidify}}/preview" width="720" height="431"></iframe>
                             {% else %}
                             Final Pending
                             {% endif %}
