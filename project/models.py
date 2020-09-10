@@ -271,6 +271,7 @@ class Award(models.Model):
     __original_script = None
     __original_draft = None
     __original_final = None
+    complete =  models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.awards.organization.name} {self.awards.project_name} {str(self.award_number)} {self.award_name}"

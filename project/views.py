@@ -372,7 +372,7 @@ class AwardDetailView(DetailView):
 class AwardUpdateView(UpdateView):
     model = Award
     template_name = 'project/award_update_form.html'
-    fields = ['award_number', 'award_name', 'award_description', 'award_winner', 'award_project','award_comments','script','draft','final_draft']        
+    fields = ['award_number', 'award_name', 'award_description', 'award_winner', 'award_project','award_comments','script','draft','final_draft','complete']        
     help_text = {'script':'http://'}
     widgets = {
         'award_winner':forms.Textarea
