@@ -53,9 +53,8 @@ def folderfy(value):
 	except:
 		return "#"
 @register.filter
-def vidify(value):
-	
-	#https://drive.google.com/file/d/1ARSiQ4zKy7Iu2MvrYEhViPBozI2GqJR3/view?usp=sharing
+def vidify(value):	
+	#https://drive.google.com/file/d/1ARSiQ4zKy7Iu2MvrYEhViPBozI2GqJR3/view?usp=sharing	
 	try:
 		slug = re.findall('id=(.+)',value)[0]
 		

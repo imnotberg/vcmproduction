@@ -457,12 +457,14 @@ def comment_view(request,org_id,awards_id,award_id):
                 newframe = newframe.append(series,ignore_index=True)
                 award.edit_comments = newframe
                 award.save()
+                award.comment_added()
                  
             else:
                 print('we are here')
                 comment_dict = {'BLOCK':block,'COMMENT_TYPE':comment_type,'TIME':time,'COMMENT':comment,} 
                 award.edit_comments = award.edit_comments.append(comment_dict,ignore_index=True)
                 award.save()
+                award.comment_added()
                 
 
 

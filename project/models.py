@@ -293,6 +293,18 @@ class Award(models.Model):
         message.to.add([team_email])
         message.send()
 
+    def comment_added(self):        
+        subject = f"Updated Comment: {self.awards.project_name} {self.award_name}"
+        html_content = '<h4>Updated Comment 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly."
+        text_content = 'We have updated a draft for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly." 
+        credentials=(settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
+        account = Account(credentials)
+        message = account.new_message()
+        message.subject = subject
+        message.body = html_content        
+        message.to.add(['aaron.weisberg@virtuouscirclemedia.com'])
+        message.send()
+
 
     def updated_script(self):
         team_email = self.awards.organization.team_email
@@ -347,16 +359,17 @@ class Comment(models.Model):
     info = JSONField()
 
 
-    def send_comment(sender,instance,**kwargs):
+    def send_comment(self):
+        print('sending comment!')
         credentials = (settings.EMAIL_CLIENT,settings.EMAIL_SECRET)
         subject = 'New Comment'
-        body = f"From: {instance.user.username}"
-        body += '\n'f"Message: {instance.comment}"
+        body = f"From: {self.user.username}"
+        body += '\n'f"Message: {self.comment}"
         body += '\n'f"{self.info}"
         account = Account(credentials)
         message= account.new_message()
         message.body = body
-        message.to.add(User.objects.get(pk=1).email)
+        message.to.add([User.objects.get(pk=1).email])
         message.subject = 'New comment'
         message.send()
 
@@ -387,6 +400,7 @@ def video_update(sender,instance,**kwargs):
             obj.updated_draft()
         if not obj.script == instance.script:
             obj.updated_script()
+        
 
 @receiver(post_save, sender=File)
 def upload_file(sender, instance, **kwargs):
@@ -394,6 +408,11 @@ def upload_file(sender, instance, **kwargs):
     gd = GoogleDriveApi()
     gd.uploadFile(instance.filename, instance.file.url, instance.award.folder_id,mimetypes.guess_type(instance.filename)[0])
     #uploadFile(self, name, file_path, mimetype, folder_name=None):
+
+@receiver(post_save,sender=Comment)
+def comment_added(sender,instance,**kwargs):
+    print('post save biz')
+    instance.send_comment()
 
 
     
