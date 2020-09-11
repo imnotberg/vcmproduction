@@ -415,7 +415,7 @@ def video_update(sender,instance,**kwargs):
             obj.updated_draft()
         if not obj.script == instance.script:
             obj.updated_script()
-        if not obj.final == instance.final:
+        if not obj.final_draft == instance.final_draft:
             obj.updated_final()
         
 
