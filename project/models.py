@@ -295,8 +295,7 @@ class Award(models.Model):
         message.send()
     
     def updated_final(self):
-        team_email = self.awards.organization.team_email
-        print(team_email)
+        team_email = self.awards.organization.team_email        
         subject = f"Updated Final added for video: {self.awards.project_name} {self.award_name}"
         html_content = '<h4>We have updated a final-draft for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: <a href="http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly."
         text_content = 'We have updated a final-draft draft for video: 'f"{self.award_name}"' to the production portal. You can view all updates to this video and make any changes here: http://www.virtuous-circle.com/'f"org/{self.awards.organization.id}/awards/{self.awards.id}/award/{self.id}"'">'f"{self.award_name}"'</a></h4>'f"Please be sure to comment or email us directly." 

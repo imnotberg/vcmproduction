@@ -508,4 +508,12 @@ def comments_update(request):
 
     return render(request,'project/comments_list.html',context)
 
-
+@login_required
+def approve_video(request,video_id):
+    print('video approve!!!')
+    video = Award.objects.get(pk=video_id)
+    print('video',video)
+    video.complete = True
+    print('video.complete',video.complete)
+    video.save()
+    return redirect(request.META['HTTP_REFERER'])   

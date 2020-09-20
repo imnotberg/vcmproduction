@@ -44,6 +44,7 @@ urlpatterns = [
 	path('password-change',auth_views.PasswordChangeView.as_view(template_name='project/password_change_form.html'),name='password_change'),
 	path('email',views.email,name='email'),
 	path('comments-update',views.comments_update,name='comments-update'),
+	path('approve-video/video/<video_id>',views.approve_video,name='approve_video'),
 	]
 
 if settings.DEBUG:
