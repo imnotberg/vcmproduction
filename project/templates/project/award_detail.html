@@ -11,8 +11,8 @@
                           </div>
                         <br>
                         <br>
-                        {% if object.final_draft is not None and object.final_draft != '#' %}
-                        <a class="btn btn-primary btn-block"  href="{% url 'project:approve_video' object.pk %}" onclick="return confirm('Would you like to approve {{object.award_name}}?');">
+                        {% if object.draft is not None and object.draft != '#' %}
+                        <a  class="btn btn-primary btn-block"  href="{% url 'project:approve_video' object.pk %}" onclick="return confirm('Would you like to approve {{object.award_name}}?');">
                           Approve Video
                         </a>
                         {% endif %}
