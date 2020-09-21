@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 {% load extras %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="container emp-profile">	  
 
                 <div class="row">
@@ -46,7 +47,11 @@
         <table class="table table-bordered">
             <tr>
                 <th>Number</th>
-                <td>{{object.award_number}}</td>
+                <td>{{object.award_number}}
+                {% if object.complete == True %}
+                <i class="fas fa-check"></i>
+                {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Winner</th>
@@ -56,7 +61,6 @@
                 <th>Description</th>
                 <td>{{object.award_description}}</td>
             </tr>
-
         </table>
         </div>
         <div class="col-sm-2">
