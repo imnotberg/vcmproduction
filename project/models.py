@@ -410,11 +410,11 @@ def video_update(sender,instance,**kwargs):
     except sender.DoesNotExist:
         print('new file')
     else:
-        if not obj.draft == instance.draft:
+        if not obj.draft == instance.draft and instance.draft !='#' and instance.draft is not None:
             obj.updated_draft()
-        if not obj.script == instance.script:
+        if not obj.script == instance.script and instance.script != '#' and instance.script is not None:
             obj.updated_script()
-        if not obj.final_draft == instance.final_draft:
+        if not obj.final_draft == instance.final_draft and instance.final_draft !='#' and instance.final_draft is not None:
             obj.updated_final()
         
 
